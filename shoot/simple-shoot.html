@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		 #map {
+		 	width: 500px;
+		 	height: 600px;
+		 	position: relative;
+		 	background-color: #ccc;
+		 }
+	</style>
+</head>
+<body>
+	<div id="map"></div>
+	<script>
+		
+		(function Plane(width,height,map){
+			var ple = [];
+			var bullet = [];
+			var that = null;
+			this.width = width || 10;
+			this.height = height || 10;
+			this.x = 25;
+			this.y = 55;
+			this.color = "red";
+			this.direction = null;
+			that = this;
+
+			// 创建飞机
+			Plane.prototype.init = function (map){
+				remove();
+				var dv = document.createElement("div");
+				map.appendChild(dv);
+				dv.style.width = this.width + "px";
+				dv.style.height = this.height + "px";
+				dv.style.backgroundColor = this.color;
+				dv.style.left = this.x*this.width + "px";
+				dv.style.top = this.y*this.height + "px";
+				dv.style.position = "absolute";
+
+				ple.push(dv);
+				// console.dir(ple);
+			};
+
+			// 清除原位置的飞机
+			function remove(){
+				var i = ple.length - 1;
+				for(;i>=0;i--){
+					var div = ple[i];
+					div.parentNode.removeChild(div);
+
+					ple.splice(i,1);
+				}
+			}
+
+			// 飞机左右移动
+			Plane.prototype.move = function (map){
+				document.addEventListener("keydown",function(e){
+					switch(e.keyCode){
+						case 37 : this.x>0?this.x -= 1:0;this.init(map);break;
+						case 39 : this.x<49?this.x += 1:50;this.init(map);break;
+						// case 32 : this.shoot(map);break;
+					}
+				}.bind(that),false)
+				
+			};
+
+			// // shootbullet
+			// Plane.prototype.shoot = function (map){
+			// 	var index = 0;
+			// 	var x = this.x;var y = this.y + 1;			
+			// 	var div = document.createElement("div");
+			// 	map.appendChild(div);
+			// 	div.style.width = "10px";
+			// 	div.style.height = "10px";
+			// 	div.style.backgroundColor = "yellow";
+			// 	div.style.left = x*this.width + "px";
+			// 	div.style.top = y*this.height + "px";
+			// 	div.style.position = "absolute";
+			// 	div.style.index = index;
+
+			// 	bullet.push(div);
+
+			// }
+
+			window.Plane = Plane;
+		}()); // function Plane
+
+		(function Enemy(width,height,map){
+			this.elements = []; // 记录敌人位置坐标
+			this.foe = []; // 记录敌人div
+			this.width = width || 10;
+			this.height = height || 10;
+
+			Enemy.prototype.init = function(map){
+				remove();
+				this.num = parseInt(Math.random()*11)+1;// 随机出现敌人数目
+				for(var i=0;i<this.num;i++){ // 创建enemy
+					var flat = true;
+					this.x = parseInt(Math.random()*25);
+					this.y = parseInt(Math.random()*7);
+					var enemy = {x:this.x,y:this.y};
+					for(var y=0;y<this.elements.length;y++){  // 判断随机敌人的位置是否相同
+						if(this.elements[y].x==this.x && this.elements[y].y==this.y){
+							i--;flat = false;
+						}
+					}
+					if(flat){
+						var div = document.createElement("div");
+						map.appendChild(div);
+						div.style.width = "10px";
+						div.style.height = "10px";
+						div.style.backgroundColor = "black";
+						div.style.left = this.x*this.width + "px";
+						div.style.top = this.y*this.height + "px";
+						div.style.position = "absolute";
+						this.foe.push(div); // this.foe 中是敌人 div object
+						this.elements.push(enemy); // this.elements 中是敌人位置坐标
+					}
+				}
+			}
+
+			function remove(){
+
+			}
+
+
+			window.Enemy = Enemy;
+		}());
+
+		(function Game(map){
+			bulleted = [];
+			var that = null;
+			this.bullet = [];
+			var num = 0;
+			this.plane = new Plane();
+			this.enemy = new Enemy();
+			that = this;
+
+			Game.prototype.star = function (map){
+				// console.log("??");
+				// console.dir(map);
+				this.plane.init(map);
+				this.enemy.init(map);
+				this.plane.move(map);
+				document.addEventListener("keydown",function(e){
+					switch(e.keyCode){
+						case 32 : this.shoot(map);break;
+					}
+				}.bind(that),false)
+			}
+
+			//shootbullet
+			Game.prototype.shoot = function (map){
+				var a = this.plane.x;var b = this.plane.y - 1;
+				// console.log(a+ "===========" + b);
+				this.bullet.push({x:a,y:b,index:num++})	// this.bullet 中是子弹坐标数组
+				// console.dir(this.bullet);
+				// clearInterval(timeId);
+				var timeId = setInterval(function(){
+					remove();
+					// console.log(this.bullet.length);
+					for(var i=0;i<this.bullet.length;i++){
+						this.bullet[i].y -= 1;
+						var div = document.createElement("div");
+						map.appendChild(div);
+						div.style.width = "10px";
+						div.style.height = "10px";
+						div.style.backgroundColor = "yellow";
+						div.style.left = this.bullet[i].x*this.plane.width + "px";
+						div.style.top = this.bullet[i].y*this.plane.height + "px";
+						div.style.position = "absolute";
+						bulleted.push(div);// bulleted 中是 div object
+					}
+
+					// 判断子弹是否击中目标
+					// bulleted 中是 div object
+					// this.bullet 中是子弹坐标数组
+					// this.enemy.elements 中是敌人位置坐标
+					// this.enemy.foe 中是敌人 div object
+					// console.log(this.bullet.length)
+					for(var n=0;n<this.bullet.length;n++){
+						var blt = this.bullet[n];
+						// console.log("??")
+						for(var m=0;m<this.enemy.elements.length;m++){
+							var emy = this.enemy.elements[m];
+							// console.log(blt);console.log(emy);
+							if(blt.x==emy.x&&blt.y==emy.y){
+								// console.log("zhel i");
+								// =================================================子弹未能清除
+								bulleted[n].parentNode.removeChild(bulleted[n]);
+								bulleted.splice(n,1);
+								this.bullet.splice(m,1);
+								this.enemy.foe[m].parentNode.removeChild(this.enemy.foe[m]);
+								this.enemy.foe.splice(m,1);
+								this.enemy.elements.splice(m,1);
+							}
+						}
+					}
+
+					if(this.enemy.elements.length == 0){
+						this.enemy.init(map);
+					}
+
+					// 当空格键按下时 清除上次的定时器
+					document.addEventListener("keydown",function(e){
+						switch(e.keyCode){
+							case 32 : clearInterval(timeId);break;
+						}
+					},false)
+				}.bind(that),10);
+				// bulleted.push(div);
+				// console.dir(this.bullet);
+			}// 定时器
+
+			// 清除子弹，
+			function remove(){
+				// console.log(bulleted.length);
+				// console.dir(bulleted);
+				for(var i=bulleted.length-1;i>=0;i--){
+					var dv = bulleted[i];
+					// console.log("??");
+					dv.parentNode.removeChild(dv);
+					bulleted.splice(i,1);
+				}
+			}
+
+			window.Game = Game;
+		}());
+
+		var game = new Game();
+		game.star(document.getElementById("map"));
+		// var enemy = new Enemy();
+		// enemy.init(document.getElementById("map"));
+
+		// var plane = new Plane();
+		// plane.init(document.getElementById("map"));
+		// plane.move(document.getElementById("map"));
+	</script>
+</body>
+</html>
