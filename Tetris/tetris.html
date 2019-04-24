@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>俄罗斯方块</title>
+	<script src="../jQuery/JQuery-v3.3.1.js"></script>
+	<style type="text/css">
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		#box {
+			width: 400px;
+			height: 500px;
+			background-color: #ccc;
+			margin:20px auto;
+			position: relative;
+			overflow: hidden;
+		}
+		.block {
+			width: 18px;
+			height: 18px;
+			border:1px solid red;
+			position: absolute;
+			background-color: yellow;
+		}
+	</style>
+</head>
+<body>
+	<div id="box"></div>
+	
+	<script type="text/javascript">
+		// 旋转函数还有出边界的问题
+
+		(function Game(){
+			var score = 0
+			var movelist = [] // 移动的方块div
+			var borderlist = [] // 底部的方块div元素
+			var border = [] // 底部的数组元素
+			for(let i=0;i<25;i++){
+				borderlist[i] = []
+				border[i] = []
+			}
+			// var block = [
+			// 	[
+			// 		{x:9,y:0,color:"yellow"},
+			// 		{x:9,y:1,color:"yellow"},
+			// 		{x:10,y:0,color:"yellow"},
+			// 		{x:10,y:1,color:"yellow"}
+			// 	], // 田
+			// 	[
+			// 		{x:9,y:0,color:"yellow"},
+			// 		{x:9,y:1,color:"yellow"},
+			// 		{x:9,y:2,color:"yellow"},
+			// 		{x:10,y:2,color:"yellow"}
+			// 	], // L
+			// 	[
+			// 		{x:10,y:0,color:"yellow"},
+			// 		{x:10,y:1,color:"yellow"},
+			// 		{x:10,y:2,color:"yellow"},
+			// 		{x:9,y:2,color:"yellow"}
+			// 	], // 」 
+			// 	[
+			// 		{x:10,y:0,color:"yellow"},
+			// 		{x:9,y:1,color:"yellow"},
+			// 		{x:10,y:1,color:"yellow"},
+			// 		{x:11,y:1,color:"yellow"}
+			// 	], // 凸
+			// 	[
+			// 		{x:10,y:0,color:"yellow"},
+			// 		{x:10,y:1,color:"yellow"},
+			// 		{x:10,y:2,color:"yellow"},
+			// 		{x:10,y:3,color:"yellow"}
+			// 	], // I 
+			// 	[
+			// 		{x:9,y:0,color:"yellow"},
+			// 		{x:10,y:0,color:"yellow"},
+			// 		{x:10,y:1,color:"yellow"},
+			// 		{x:11,y:1,color:"yellow"}
+			// 	], // z
+			// 	[
+			// 		{x:9,y:1,color:"yellow"},
+			// 		{x:10,y:1,color:"yellow"},
+			// 		{x:10,y:0,color:"yellow"},
+			// 		{x:11,y:0,color:"yellow"}
+			// 	]  // 反z
+			// ] // 七种方块类型
+			this.body = [] // 当前的方块数组
+
+			
+			// 初始化方块
+			Game.prototype.init = function(map){
+				remove()
+				var block = new Array(4)
+				// console.log(border)
+				var x = parseInt((Math.random()*28)%7) 
+				// console.log(x)
+				switch(x){
+					case 0:{    
+			                    block[0] = {x:9, y:0};    
+			                    block[1] = {x:9, y:1};    
+			                    block[2] = {x:10, y:0};    
+			                    block[3] = {x:10, y:1};    
+			                    break;    
+			                }    // 田
+	                case 1:{    
+			                    block[0] = {x:9, y:0};    
+			                    block[1] = {x:9, y:1};    
+			                    block[2] = {x:9, y:2};    
+			                    block[3] = {x:9, y:3};    
+			                    break;    
+			                }    // I
+	                case 2:{    
+			                    block[0] = {x:9, y:0};    
+			                    block[1] = {x:9, y:1};    
+			                    block[2] = {x:9, y:2};    
+			                    block[3] = {x:10, y:2};    
+			                    break;    
+			                }    // L
+	                case 3:{    
+			                    block[0] = {x:10, y:0};    
+			                    block[1] = {x:10, y:1};    
+			                    block[2] = {x:10, y:2};    
+			                    block[3] = {x:9, y:2};    
+			                    break;    
+			                }    // 」 
+	                case 4:{    
+			                    block[0] = {x:9, y:0};    
+			                    block[1] = {x:10, y:0};    
+			                    block[2] = {x:10, y:1};    
+			                    block[3] = {x:11, y:1};    
+			                    break;    
+			                }    // Z
+	                case 5:{    
+			                    block[0] = {x:9, y:1};    
+			                    block[1] = {x:10, y:1};    
+			                    block[2] = {x:10, y:0};    
+			                    block[3] = {x:11, y:0};    
+			                    break;    
+			                }    // 反Z
+	                case 6:{    
+			                    block[0] = {x:9, y:1};    
+			                    block[1] = {x:10, y:0};    
+			                    block[2] = {x:10, y:1};    
+			                    block[3] = {x:11, y:1};    
+			                    break;    
+			                }  // 凸
+				}
+				// var x = 0 
+				// x += 1
+				// if(x=6){x=0}
+				for(let i=0;i<block.length;i++){
+					this.body.push(block[i])
+					var div = document.createElement("div")
+					$(div).addClass("block")
+					div.style.left = this.body[i].x*20 + "px"
+					div.style.top = this.body[i].y*20 + "px"
+					movelist.push(div)
+					map.appendChild(div)
+				}
+				// console.log(this.body)
+				this.run(map)
+			}
+
+			function remove(){
+				for(let i=movelist.length-1;i>=0;i--){
+					var ele = movelist[i]
+					ele.parentNode.removeChild(ele)
+					movelist.splice(i,1)
+				}
+			}
+
+			Game.prototype.repaint = function(map){
+				remove()
+				for(let i=0;i<this.body.length;i++){
+					var div = document.createElement("div")
+					$(div).addClass("block")
+					div.style.left = this.body[i].x*20 + "px"
+					div.style.top = this.body[i].y*20 + "px"
+					movelist.push(div)
+					map.appendChild(div)
+				}
+			}
+
+			// 自由下落
+			Game.prototype.run = function(map){
+				var that = this
+				var timeID = setInterval(function(){
+					
+					var flag = this.catchBorder()
+					if(!flag){ // 未到底且未触碰到其他方块  则继续下落
+						for(let i=0;i<this.body.length;i++){
+							this.body[i].y += 1
+						}
+						console.log(timeID+ "=========")
+						this.repaint(map)
+					}else{ // 到达了底部或触碰到其他方块
+						clearInterval(timeID)
+						for(let i=0;i<this.body.length;i++){
+							var x = this.body[i].y
+							// console.log(this.body[i])
+							border[x].push(this.body[i])
+							borderlist[x].push(movelist[i])
+						} // 将到底的方块的div及数组 都转移到 border及 borderlist中
+						// console.log(border)
+						// this.body.splice(0,4)
+						// movelist.splice(0,4)
+						this.clearlist()
+						this.clearline(map)
+						console.log(timeID)
+						if(border[0].length != 0){
+							clearInterval(timeID)
+							alert("score:" + score)
+							console.log(timeID+"|||||||||")
+						}else{
+							// console.log(this.body)
+							this.init(map)
+						}
+						
+					}
+					
+				}.bind(that),700)
+
+				
+			}
+
+			// 清空this.body 和　movelist
+			Game.prototype.clearlist = function(){
+				for(let i=this.body.length-1;i>=0;i--){
+					this.body.splice(i,1)
+				}
+				// console.log(this.body)
+				for(let i=movelist.length-1;i>=0;i--){
+					movelist.splice(i,1)
+				}
+			}
+
+			// 判断是否到了底部 -- 返回 false 则未到底部 
+ 			Game.prototype.catchBorder = function(){
+				var flag = false
+				for(let i=0;i<this.body.length;i++){
+					if(this.body[i].y == 24){
+						flag = true
+						break
+					}
+				}
+				if(flag){ // 到底部了  返回flag = true
+					// console.log("到底部了")
+					return flag
+				}else{
+					for(let i=0;i<this.body.length;i++){
+						var n = this.body[i].y+1
+						for(let j=0;j<border[n].length;j++){
+							// console.log(border)
+							if(this.body[i].x == border[n][j].x && border[n][j].y == (this.body[i].y+1)){
+								// console.log("碰到了")
+								flag = true
+								break
+							}
+						}
+						if(flag){break}
+					}
+				}
+				// if(!flag){console.log("未碰到")}
+				return flag
+			}
+
+			// 判断左边是否有方块
+			Game.prototype.catchLeftBorder = function(){
+				var flag = false
+				for(let i=0;i<this.body.length;i++){
+					if(this.body[i].x == 0){
+						flag = true
+						break
+					}
+				}
+				if(flag){ // 到底部了  返回flag = true
+					// console.log("到底部了")
+					return flag
+				}else{
+					for(let i=0;i<this.body.length;i++){
+						var n = this.body[i].y
+						for(let j=0;j<border[n].length;j++){
+							// console.log(border)
+							if((this.body[i].x-1) == border[n][j].x && border[n][j].y == this.body[i].y){
+								// console.log("碰到了")
+								flag = true
+								break
+							}
+						}
+						if(flag){break}
+					}
+				}
+				// if(!flag){console.log("未碰到")}
+				return flag
+			}
+
+			// 判断右边边是否有方块
+			Game.prototype.catchRightBorder = function(){
+				var flag = false
+				for(let i=0;i<this.body.length;i++){
+					if(this.body[i].x == 19){
+						flag = true
+						break
+					}
+				}
+				if(flag){ // 到底部了  返回flag = true
+					// console.log("到底部了")
+					return flag
+				}else{
+					for(let i=0;i<this.body.length;i++){
+						var n = this.body[i].y
+						for(let j=0;j<border[n].length;j++){
+							// console.log(border)
+							if((this.body[i].x+1) == border[n][j].x && border[n][j].y == this.body[i].y){
+								// console.log("碰到了")
+								flag = true
+								break
+							}
+						}
+						if(flag){break}
+					}
+				}
+				// if(!flag){console.log("未碰到")}
+				return flag
+			}
+
+			// 消除行并重新绘制box
+			Game.prototype.clearline = function(map){
+				var line = [] // 记录满格的行数
+				for(let i=0;i<border.length;i++){
+					if(border[i].length == 20){
+						line.push(i)
+						console.log(i)
+					}
+				}
+				if(line.length != 0){
+					score += line.length
+
+					for(let i=0;i<line.length;i++){ // 满格的行数
+						var n = line[i]
+						// console.log(border[n])
+						border[n].splice(0,20)
+						console.log(border[n].length)
+						for(let j=n-1;j>=0;j--){ // 满格上面的行
+							for(let x=0;x<border[j].length;x++){
+								border[j][x].y += 1
+								border[j+1].push(border[j][x])
+							}
+							var len = border[j].length
+							border[j].splice(0,len)
+						}
+					}
+
+					clearbox()
+					repaintbox(map)
+				}
+				
+			}
+
+			// 擦除 box 中的div
+			function clearbox(){
+				for(let i=0;i<borderlist.length;i++){
+					for(let j=borderlist[i].length-1;j>=0;j--){
+						var ele = borderlist[i][j]
+						// console.log(ele)
+						ele.parentNode.removeChild(ele)
+						borderlist[i].splice(j,1)
+					}
+				}
+			}
+
+			// 重新绘制box中的div
+			function repaintbox(map){
+				for(let i=0;i<border.length;i++){
+					for(let j=0;j<border[i].length;j++){
+						var obj = border[i][j]
+						var div = document.createElement("div")
+						$(div).addClass("block")
+						div.style.left = obj.x*20 + "px"
+						div.style.top = obj.y*20 + "px"
+						// console.log(obj)
+						borderlist[obj.y].push(div)
+						map.appendChild(div)
+					}
+				}
+			}
+
+			// 按键控制绑定
+			Game.prototype.bindkey = function(){
+				var that = this
+				document.addEventListener("keydown",function(e){
+					switch(e.keyCode){
+						case 37 :this.leftMove(map);break;
+						case 38 :this.rotate(map);break;
+						case 39 :this.rightMove(map);break;
+						case 40 :this.downMove(map);break;
+					}
+				}.bind(that),false)
+			}
+
+			// 向左移动
+			Game.prototype.leftMove = function(map){
+				var flag = true
+				for(let i=0;i<this.body.length;i++){
+					if(this.body[i].x == 0){flag = false;break;}
+				}
+				if(this.catchLeftBorder()){return false}
+				if(flag){
+					for(let i=0;i<this.body.length;i++){
+						this.body[i].x -= 1
+					}
+					this.repaint(map)
+				}
+
+				return flag
+			}
+
+			// 向右移动
+			Game.prototype.rightMove = function(map){
+				var flag = true
+				for(let i=0;i<this.body.length;i++){
+					if(this.body[i].x == 19){flag = false;break;}
+				}
+				if(this.catchRightBorder()){return false}
+				if(flag){
+					for(let i=0;i<this.body.length;i++){
+						this.body[i].x += 1
+					}
+					this.repaint(map)
+				}
+
+				return flag
+			}
+
+			// 向下移动
+			Game.prototype.downMove = function(map){
+				var flag = true
+				// console.log("s")
+				if(this.catchBorder()){return flag = false}
+				for(let i=0;i<this.body.length;i++){
+					if(this.body[i].y >= 24){
+						flag = false
+						break
+					}
+				}
+				if(flag){
+					for(let i=0;i<this.body.length;i++){
+						this.body[i].y += 1
+					}
+					// console.log(0)
+					this.repaint(map)
+				}
+
+				return false
+			}
+
+			// 旋转方块  ===================================== bad function
+			// 旋转时 I 图形会出边界
+			Game.prototype.rotate = function(map){
+				var left =false
+				var right = false
+				var tepblock = []
+				for(let i=0;i<this.body.length;i++){
+					tepblock.push(this.body[i])
+				}
+				// console.log(tepblock)
+				// console.log(this.body)
+				var cx = Math.round((this.body[0].x+this.body[1].x+this.body[2].x+this.body[3].x)/4)
+				var cy = Math.round((this.body[0].y+this.body[1].y+this.body[2].y+this.body[3].y)/4)
+				
+
+				for(let i=0;i<this.body.length;i++){
+					var x = tepblock[i].x
+					var y = tepblock[i].y
+					tepblock[i].x = cx + cy - y
+					tepblock[i].y = cy - cx + x
+					if(tepblock[i].x > 19){right = true}
+					if(tepblock[i].x < 0){left = true}
+				} // 旋转后的数组
+
+				if(right){
+					for(let i=0;i<tepblock.length;i++){
+						tepblock[i].x -= 1
+					}
+				}
+				if(left){
+					for(let i=0;i<tepblock.length;i++){
+						tepblock[i].x += 1
+					}
+				}
+
+				if(availblock(tepblock)){
+					return false
+				}else{
+					for(let i=0;i<this.body.length;i++){
+						this.body[i].x == tepblock[i].x
+						this.body[i].y == tepblock[i].y
+					}
+					this.repaint(map)
+				}
+			}
+
+			// 判断旋转后的图形有没有和已有的方块重合
+			function availblock(arr){
+				
+				var flag = false
+
+				for(let i=0;i<arr.length;i++){
+					var n =arr[i].y
+					for(let j=0;j<border[n].length;j++){
+						if(arr[i].x == border[n][j].x && arr[i].y == border[n][j].y){
+							flag = true
+							
+							break
+						}
+					}
+					if(flag){
+						break
+					}
+				}
+				return flag
+			} // 返回值为false 即没有重合
+
+			window.Game = Game
+		}());
+
+		var map = $("#box")[0]
+		var game = new Game()
+		game.init(map)
+		game.bindkey(map)
+	</script>
+</body>
+</html>
