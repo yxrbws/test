@@ -3,7 +3,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>俄罗斯方块</title>
-	<script src="../jQuery/JQuery-v3.3.1.js"></script>
 	<style type="text/css">
 		* {
 			padding: 0;
@@ -152,7 +151,7 @@
 				for(let i=0;i<block.length;i++){
 					this.body.push(block[i])
 					var div = document.createElement("div")
-					$(div).addClass("block")
+					div.className = "block"
 					div.style.left = this.body[i].x*20 + "px"
 					div.style.top = this.body[i].y*20 + "px"
 					movelist.push(div)
@@ -174,7 +173,7 @@
 				remove()
 				for(let i=0;i<this.body.length;i++){
 					var div = document.createElement("div")
-					$(div).addClass("block")
+					div.className = "block"
 					div.style.left = this.body[i].x*20 + "px"
 					div.style.top = this.body[i].y*20 + "px"
 					movelist.push(div)
@@ -376,7 +375,7 @@
 					for(let j=0;j<border[i].length;j++){
 						var obj = border[i][j]
 						var div = document.createElement("div")
-						$(div).addClass("block")
+						div.className = "block"
 						div.style.left = obj.x*20 + "px"
 						div.style.top = obj.y*20 + "px"
 						// console.log(obj)
@@ -525,7 +524,7 @@
 			window.Game = Game
 		}());
 
-		var map = $("#box")[0]
+		var map = document.getElementById("box")
 		var game = new Game()
 		game.init(map)
 		game.bindkey(map)
