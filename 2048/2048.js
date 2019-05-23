@@ -3,8 +3,9 @@
   function random(){
     // console.log(block)
     for(let i=0;i<2;){
-      block[i] = {x:parseInt(Math.random()*4),y:parseInt(Math.random()*4)}
-      if(avalibe(block[i])){i++;}
+      let a = block.length
+      block[a] = {x:parseInt(Math.random()*4),y:parseInt(Math.random()*4),value:'2'}
+      if(avalibe(block[a])){i++;}
     }
   }
 
@@ -14,7 +15,7 @@
     if(block.length <= 1){return flag}
     for(let i=0;i<block.length-1;i++){
       let obj = block[i]
-      if(obj.x == blo.x && obj.y == blo.y){flag = false;break}
+      if(obj.x == blo.x && obj.y == blo.y){block.splice(block.length-1,1);flag = false;break}
     }
   return flag
   }
@@ -28,11 +29,11 @@
     for(let i=block.length-2;i<block.length;i++){
       let x = block[i].x
       let y = block[i].y
-      console.log(block[i])
-      console.log(block.length)
+      // console.log(block[i])
+      // console.log(block.length)
       let tdobj = tbl.rows[x].cells[y]
-      tdobj.className = 'n2'
-      tdobj.innerHTML = '2'
+      tdobj.className = 'n' + block[i].value
+      tdobj.innerHTML = block[i].value
       // console.log(parseInt(tdobj.className.match(/[\d]+/)))
     }
      
@@ -55,14 +56,80 @@
 
   function keyLeft(){
     flag =  true
+    let rows = sortRows()
+    // console.log(block)
+    clearBlock()
+    // console.log(rows)
+    // console.log(111)
+    for(let i=0;i<rows.length;i++){
+      // console.log(333)
+      for(let n=0;n<rows[i].length;n++){
+        if(rows[i][n+1]){
+          if(parseInt(rows[i][n].value) === parseInt(rows[i][n+1].value)){
+            let value =  parseInt(rows[i][n].value)*2
+            rows[i][n].value = value
+            rows[i].splice(n+1,1)
+          }
+        }
+        rows[i][n].y = n
+        block.push(rows[i][n])
+        // console.log(222)
+        // console.log(rows)
+      }
+    }
+    random()
+    repaint()
+    // console.log(block)
   }
 
   function keyUp(){
     flag =  true
   }
 
+  // ================未成功======合并value值时出错
   function keyRight(){
     flag =  true
+    
+    let rows = sortRows()
+    console.log(block)
+    console.log(rows)
+    clearBlock()
+    for(let i=0;i<rows.length;i++){
+      let lf = 3
+      rows[i].reverse((a,b)=>{
+        if(a.y<b.y){
+          var tep = a
+          a= b
+          b = tep
+        }
+      })
+      for(let n=0;n<rows[i].length;n++){
+        if(rows[i][n+1]){
+          if(rows[i][n].value == rows[i][n+1].value){
+            rows[i][n].value = parseInt(rows[i][n].value)*2
+            rows[i].splice(n+1,1)
+          }
+        }
+        rows[i][n].y = lf--
+        block.push(rows[i][n])
+      }
+      // for(let n=rows[i].length-1;n>=0;n--){
+      //   if(rows[i][n-1] && (n-1)>=0){
+      //     if(rows[i][n].value == rows[i][n-1].value){
+      //       let value = parseInt(rows[i][n].value)*2
+      //       rows[i][n].value = value
+      //       rows[i].splice(n-1,1)
+      //     }
+      //   }
+      //   rows[i][n].y = lf--
+      //   block.push(rows[i][n])
+      //   // console.log(222)
+      // }
+    }
+
+    random()
+    repaint()
+    console.log(block)
   }
 
   function keyDown(){
@@ -75,6 +142,7 @@
     // console.log(rows)
     for(let i=0;i<block.length;i++){
       let blo = block[i]
+      blo.value = parseInt(blo.value)
       rows[blo.x].push(blo)
     }
 
@@ -87,7 +155,7 @@
         }
       })
     }
-    console.log(rows)
+    // console.log(rows)
     return rows
   }
   // sortRows()
@@ -99,6 +167,18 @@
       let blo = block[i]
       lines[blo.y].push(blo)
     }
+
+    for(let i=0;i<4;i++){
+      lines[i].sort((a,b)=>{
+        if(a.x > b.x){
+          let tep = a
+          a = b
+          b = tep
+        }
+      })
+    }
+
+    return lines
   }
 
   // 添加button点击事件
@@ -118,7 +198,7 @@
     // star()
   }
 
-  function clear(){
+  function clearBlock(){
     let tab = document.querySelector("table")
     for(let i=block.length-1;i>=0;i--){
       let x = block[i].x
@@ -127,6 +207,18 @@
       tdobj.className = ""
       tdobj.innerHTML = ""
       block.splice(i,1)
+    }
+  }
+
+  // 重新绘制画面
+  function repaint(){
+    let tab = document.querySelector("table")
+    for(let i=0;i<block.length;i++){
+      let x = block[i].x
+      let y = block[i].y
+      let tdobj = tab.rows[x].cells[y]
+      tdobj.className = 'n' + block[i].value
+      tdobj.innerHTML = block[i].value
     }
   }
 
