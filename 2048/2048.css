@@ -59,20 +59,25 @@ table tr td {
 .n128 {
   background-color: #a7432a;
   color: white;
+  font-size: 35px;
 }
 .n256 {
   background-color: #7e3321;
   color: white;
+  font-size: 35px;
 }
 .n512 {
   background-color: #802914;
   color: white;
+  font-size: 35px;
 }
 .n1024 {
   background-color: #7c200a;
   color: white;
+  font-size: 25px;
 }
 .n2048 {
   background-color: #84550e;
   color: white;
+  font-size: 25px;
 }

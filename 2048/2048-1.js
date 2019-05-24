@@ -2,6 +2,9 @@
   let block = []
   function random(){
     // console.log(block)
+    if(block.length >= 15){
+      alert("Game over")
+    }
     for(let i=0;i<2;){
       let a = block.length
       block[a] = {x:parseInt(Math.random()*4),y:parseInt(Math.random()*4),value:'2'}
@@ -56,7 +59,7 @@
 
   function keyLeft(){
     flag =  true
-    let rows = sortRowsS()
+    let rows = sortRows()
     // console.log(block)
     clearBlock()
     // console.log(rows)
@@ -78,6 +81,10 @@
       }
     }
     rows.splice(0,4)
+    if(check()){
+      alert("winner!")
+    }
+
     
     random()
     repaint()
@@ -86,12 +93,41 @@
 
   function keyUp(){
     flag =  true
+    let lines = sortLine()
+    // console.log(block)
+    clearBlock()
+    // console.log(rows)
+    // console.log(111)
+    for(let i=0;i<lines.length;i++){
+      // console.log(333)
+      for(let n=0;n<lines[i].length;n++){
+        if(lines[i][n+1]){
+          if(parseInt(lines[i][n].value) === parseInt(lines[i][n+1].value)){
+            let value =  parseInt(lines[i][n].value)*2
+            lines[i][n].value = value
+            lines[i].splice(n+1,1)
+          }
+        }
+        lines[i][n].x = n
+        block.push(lines[i][n])
+        // console.log(222)
+        // console.log(lines)
+      }
+    }
+    lines.splice(0,4)
+    if(check()){
+      alert("winner!")
+    }
+    
+    random()
+    repaint()
+    // console.log(block)
   }
 
   // ================未成功======合并value值时出错
   function keyRight(){
     flag =  true
-    let rows = sortRowsB()
+    let rows = sortRows()
     // console.log(block)
     // console.log(rows)
     // alert(1)
@@ -99,20 +135,31 @@
     for(let i=0;i<rows.length;i++){
       let lf = 3
       // rows[i].reverse()
-      // console.log(rows[i])
-      for(let n=0;n<rows[i].length;n++){
-        if(rows[i][n+1]){
-          if(parseInt(rows[i][n].value) === parseInt(rows[i][n+1].value)){
+      console.log(rows[i])
+      for(let n=rows[i].length-1;n>=0;n--){
+        if(rows[i][n-1]){
+          if(parseInt(rows[i][n].value) == parseInt(rows[i][n-1].value)){
             let value =  parseInt(rows[i][n].value)*2
-            rows[i][n].value = value
-            rows[i].splice(n+1,1)
+            rows[i][n-1].value = value
+            rows[i].splice(n,1)
+            rows[i][n-1].y = lf--
+            block.push(rows[i][n-1])
+            n--
+          }else{
+            rows[i][n].y = lf--
+            block.push(rows[i][n])
           }
+        }else{
+          rows[i][n].y = lf--
+          block.push(rows[i][n])
         }
-        rows[i][n].y = lf--
-        block.push(rows[i][n])
+        
       }
     }
     rows.splice(0,4)
+    if(check()){
+      alert("winner!")
+    }
 
     random()
     repaint()
@@ -121,10 +168,47 @@
 
   function keyDown(){
     flag =  true
+    let lines = sortLine()
+    // console.log(block)
+    // console.log(rows)
+    // alert(1)
+    clearBlock()
+    for(let i=0;i<lines.length;i++){
+      let lf = 3
+      // rows[i].reverse()
+      console.log(lines[i])
+      for(let n=lines[i].length-1;n>=0;n--){
+        if(lines[i][n-1]){
+          if(parseInt(lines[i][n].value) == parseInt(lines[i][n-1].value)){
+            let value =  parseInt(lines[i][n].value)*2
+            lines[i][n-1].value = value
+            lines[i].splice(n,1)
+            lines[i][n-1].x = lf--
+            block.push(lines[i][n-1])
+            n--
+          }else{
+            lines[i][n].x = lf--
+            block.push(lines[i][n])
+          }
+        }else{
+          lines[i][n].x = lf--
+          block.push(lines[i][n])
+        }
+        
+      }
+    }
+    lines.splice(0,4)
+    if(check()){
+      alert("winner!")
+    }
+
+    random()
+    repaint()
+    // console.log(block)
   }
 
   // 按 rows(行) 排列block 按y从小到大排列
-  function sortRowsS(){
+  function sortRows(){
     let rows = [[],[],[],[]]
     // console.log(rows)
     for(let i=0;i<block.length;i++){
@@ -134,41 +218,21 @@
     }
 
     for(let i=0;i<4;i++){
-      rows[i].sort((a,b)=>{
-        if(a.y > b.y){
-          let tep = a
-          a = b
-          b = tep
-        }
-      })
+      rows[i].sort(compare('y'))
     }
-    console.log(rows)
-    return rows
-  }
-
-  // 按 rows(行) 排列block 按y从大到小排列
-  function sortRowsB(){
-    let rows = [[],[],[],[]]
     // console.log(rows)
-    for(let i=0;i<block.length;i++){
-      let blo = block[i]
-      blo.value = parseInt(blo.value)
-      rows[blo.x].push(blo)
-    }
-
-    for(let i=0;i<4;i++){
-      rows[i].sort((a,b)=>{
-        if(a.y < b.y){
-          let tep = a
-          a = b
-          b = tep
-        }
-      })
-    }
-    console.log(rows)
     return rows
   }
-  // sortRows()
+
+  // 借用Array.sort方法排序 ------ 从小到大
+  function compare(property){
+    return function(a,b){
+      let value1 = a[property]
+      let value2 = b[property]
+      console.log((value1 - value2))
+      return value1 - value2
+    }
+  }
 
   // 按 line(列) 排列block
   function sortLine(){
@@ -179,13 +243,7 @@
     }
 
     for(let i=0;i<4;i++){
-      lines[i].sort((a,b)=>{
-        if(a.x > b.x){
-          let tep = a
-          a = b
-          b = tep
-        }
-      })
+      lines[i].sort(compare('x'))
     }
 
     return lines
@@ -193,9 +251,9 @@
 
   // 添加button点击事件
   let but = document.querySelector("input")
-  but.addEventListener('click',regame(block))
+  but.addEventListener('click',regame)
 
-  function regame(block){
+  function regame(){
     let tab = document.querySelector("table")
     for(let i=block.length-1;i>=0;i--){
       let x = block[i].x
@@ -206,6 +264,8 @@
       block.splice(i,1)
     }
     // star()
+    random()
+    repaint()
   }
 
   function clearBlock(){
@@ -232,6 +292,19 @@
     }
   }
 
+  // 检测是否达成2048
+  function check(){
+    let flag = false
+    for(let i=0;i<block.length;i++){
+      if(parseInt(block[i].value) == 2048){
+        flag = true
+        break;
+      }
+    }
+    return flag
+  }
+
+  // Game 开始
   star()
 
   // let box  = document.querySelector("table")
