@@ -56,7 +56,7 @@
 
   function keyLeft(){
     flag =  true
-    let rows = sortRows()
+    let rows = sortRowsS()
     // console.log(block)
     clearBlock()
     // console.log(rows)
@@ -89,55 +89,39 @@
   // ================未成功======合并value值时出错
   function keyRight(){
     flag =  true
-    
-    let rows = sortRows()
-    console.log(block)
-    console.log(rows)
+    let rows = sortRowsB()
+    // console.log(block)
+    // console.log(rows)
+    // alert(1)
     clearBlock()
     for(let i=0;i<rows.length;i++){
       let lf = 3
-      rows[i].reverse((a,b)=>{
-        if(a.y<b.y){
-          var tep = a
-          a= b
-          b = tep
-        }
-      })
+      // rows[i].reverse()
+      // console.log(rows[i])
       for(let n=0;n<rows[i].length;n++){
         if(rows[i][n+1]){
-          if(rows[i][n].value == rows[i][n+1].value){
-            rows[i][n].value = parseInt(rows[i][n].value)*2
+          if(parseInt(rows[i][n].value) === parseInt(rows[i][n+1].value)){
+            let value =  parseInt(rows[i][n].value)*2
+            rows[i][n].value = value
             rows[i].splice(n+1,1)
           }
         }
-        rows[i][n].y = lf--
+        rows[i][n].y = (lf-n)
         block.push(rows[i][n])
       }
-      // for(let n=rows[i].length-1;n>=0;n--){
-      //   if(rows[i][n-1] && (n-1)>=0){
-      //     if(rows[i][n].value == rows[i][n-1].value){
-      //       let value = parseInt(rows[i][n].value)*2
-      //       rows[i][n].value = value
-      //       rows[i].splice(n-1,1)
-      //     }
-      //   }
-      //   rows[i][n].y = lf--
-      //   block.push(rows[i][n])
-      //   // console.log(222)
-      // }
     }
 
     random()
     repaint()
-    console.log(block)
+    // console.log(block)
   }
 
   function keyDown(){
     flag =  true
   }
 
-  // 按 rows(行) 排列block
-  function sortRows(){
+  // 按 rows(行) 排列block 按y从小到大排列
+  function sortRowsS(){
     let rows = [[],[],[],[]]
     // console.log(rows)
     for(let i=0;i<block.length;i++){
@@ -155,7 +139,30 @@
         }
       })
     }
+    console.log(rows)
+    return rows
+  }
+
+  // 按 rows(行) 排列block 按y从大到小排列
+  function sortRowsB(){
+    let rows = [[],[],[],[]]
     // console.log(rows)
+    for(let i=0;i<block.length;i++){
+      let blo = block[i]
+      blo.value = parseInt(blo.value)
+      rows[blo.x].push(blo)
+    }
+
+    for(let i=0;i<4;i++){
+      rows[i].sort((a,b)=>{
+        if(a.y < b.y){
+          let tep = a
+          a = b
+          b = tep
+        }
+      })
+    }
+    console.log(rows)
     return rows
   }
   // sortRows()
