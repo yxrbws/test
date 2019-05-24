@@ -78,7 +78,7 @@
       }
     }
     rows.splice(0,4)
-    
+
     random()
     repaint()
     // console.log(block)
@@ -122,6 +122,8 @@
   function keyDown(){
     flag =  true
   }
+
+//========================object 排除出错 ============================
 
   // 按 rows(行) 排列block 按y从小到大排列
   function sortRowsS(){
