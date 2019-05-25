@@ -28,6 +28,12 @@ for(let i=0;i<button.length;i++){
         }
         obj.style.display = 'block'
       }
+    }else{
+      regame()
     }
   })
+}
+
+function regame(){
+  
 }
