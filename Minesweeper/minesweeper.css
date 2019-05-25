@@ -1,0 +1,37 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+#warp {
+  width: 700px;
+  height: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+#warp #control {
+  margin: 0 auto;
+  width: 400px;
+}
+#warp #control input {
+  margin: 20px;
+  border-radius: 5px;
+}
+#warp #map #map-junior,
+#warp #map #map-middle,
+#warp #map #map-senior {
+  margin: 0 auto;
+}
+#warp #map table {
+  border-collapse: collapse;
+  outline: #c0c0c0 solid 2px;
+}
+#warp #map table td {
+  width: 19px;
+  height: 19px;
+  /*display: inline-block;*/
+  border: 1px solid #827e70;
+  background-color: #b2b2b2;
+  box-shadow: inset -2px -2px 5px #fff;
+}
