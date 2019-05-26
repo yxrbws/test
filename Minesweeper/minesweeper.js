@@ -47,10 +47,12 @@ let name = '#junior'
 $("#map>div").css('display','none')
 
 function random(name){
+  clear(name)
   block.clear()
   boomBlock.clear()
   numBlock.clear()
-  let n = (name == '#junior')?15:((name == '#middle')?30:60);
+  blankBlock.clear()
+  let n = (name == '#junior')?25:((name == '#middle')?70:100);
   let r = $(name).find('tr').length
   let c = $(name).find("td").length/r
   for(let i=0;i<n;){
@@ -101,7 +103,6 @@ function random(name){
 }
 
 function star(name){
-  clear(name)
   $('#map>div').css('display','none')
   $(name).css('display','block').find('td')
         .addClass('shadow')
@@ -138,23 +139,28 @@ function checkAround(x,y){
     x+':'+(y+1),
     (x+1)+':'+y,
   ]
+
   objs.forEach(obj=>{
-    // console.log(1)
-    if(numBlock.has(obj)){
-      // console.log(2)
-      return false 
-      }else if(boomBlock.has(obj)){
-        // console.log(3)
-        return false
-      }else{
-        let arr = obj.split(':')
-        let a = parseInt(arr[0])
-        let b = parseInt(arr[1])
-        // console.log(a+"==="+b)
-        $(name).children()[0].rows[a].cells[b].className = ''
-        checkAround(a,b)
+    let r = $(name).find('tr').length
+    let arr = obj.split(':')
+    let a = parseInt(arr[0])
+    let b = parseInt(arr[1])
+    if(a>=0 && a<$(name).find('tr').length && b>=0 && b<($(name).find("td").length/r)){
+      if(!blankBlock.has(obj)){
+        // console.log(1)
+        if(!numBlock.has(obj)){
+          if(!boomBlock.has(obj)){
+            // console.log(3)
+            blankBlock.set(obj,true)
+            
+            // console.log(a+"==="+b)
+            $(name).children()[0].rows[a].cells[b].className = ''
+            checkAround(a,b)
+          }   
+        }
       }
-    })
+    } 
+  })
 }
 
 random(name)
@@ -172,5 +178,12 @@ $('input').bind('click',function(){
 })
 
 function clear(name){
-  $(name).find('td').removeClass('shadow num boom')
+  $(name).find('td').removeClass('shadow boom')
+  for(let key of numBlock.keys()){
+    let arr = key.split(':')
+    let a = parseInt(arr[0])
+    let b = parseInt(arr[1])
+    $(name).children()[0].rows[a].cells[b].innerHTML = ''
+  }
+
 }
