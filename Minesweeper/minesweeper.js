@@ -43,6 +43,7 @@
 let block = new Map() // 所有方块
 let boomBlock = new Map() // 有炸弹的方块
 let numBlock = new Map() // 有数字的方块
+let blankBlock = new Map() // 空白格
 let name = '#junior'
 $("#map>div").css('display','none')
 
