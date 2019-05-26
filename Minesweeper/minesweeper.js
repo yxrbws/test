@@ -40,74 +40,137 @@
 
 
 // 1. 默认为初级
-let block = new Map()
-let boomBlock = new Map()
-let numBlock = new Map()
+let block = new Map() // 所有方块
+let boomBlock = new Map() // 有炸弹的方块
+let numBlock = new Map() // 有数字的方块
 let name = '#junior'
 $("#map>div").css('display','none')
 
 function random(name){
-  let n = (name == '#junior')?30:((name == '#middle')?90:160);
+  block.clear()
+  boomBlock.clear()
+  numBlock.clear()
+  let n = (name == '#junior')?15:((name == '#middle')?30:60);
   let r = $(name).find('tr').length
   let c = $(name).find("td").length/r
   for(let i=0;i<n;){
     let x = parseInt(Math.random()*r)
     let y = parseInt(Math.random()*c)
-    let obj = {x:x,y:y}
+    let obj = x+':'+y
+    // console.log(boomBlock.has(obj))
     if(!boomBlock.has(obj)){
       boomBlock.set(obj,true)
       i++
+      // console.log(boomBlock.size)
     }
+   
   }
   console.log(boomBlock)
   // 判断当前方块四周的炸弹数目
   for(let i=0;i<r;i++){
     for(let l=0;l<c;l++){
       let count = 0
+      let num = i+':'+l
       let objs = [
-        {x:(i-1),y:(l-1)},
-        {x:(i-1),y:(l)},
-        {x:(i-1),y:(l+1)},
-        {x:(i),y:(l-1)},
-        {x:(i),y:(l+1)},
-        {x:(i+1),y:(l-1)},
-        {x:(i+1),y:(l)},
-        {x:(i+1),y:(l+1)},
+        (i-1)+':'+(l-1),
+        (i-1)+':'+(l),
+        (i-1)+':'+(l+1),
+        (i)+':'+(l-1),
+        (i)+':'+(l+1),
+        (i+1)+':'+(l-1),
+        (i+1)+':'+(l),
+        (i+1)+':'+(l+1)
       ]
       objs.forEach(obj=>{
         if(boomBlock.has(obj)){
           count++
         }
       })
-      if(count){
-        numBlock.set(obj,true)
-        $(name).children().rows[i].cells[l].innerHTML = '<span>${count}</span>'
-        $(name).children().rows[i].cells[l].css('font-size','8px').css('display','none')
+      if(count!=0){
+        numBlock.set(num,true)
+        // console.log($(name).children()[0].rows[i].cells[l])
+        $(name).children()[0].rows[i].cells[l].innerHTML = `<span>${count}</span>`
+        $(name).children()[0].rows[i].cells[l].style.fontSize = '5px'
+        // $(name).children()[0].rows[i].cells[l].style.text-align = 'center'
+        $($(name).children()[0].rows[i].cells[l]).children().css('display','none')
+
       }
     }
   }
+  star(name)
 }
-random(name)
 
-$(name).css('display','block').find('td')
+function star(name){
+  clear(name)
+  $('#map>div').css('display','none')
+  $(name).css('display','block').find('td')
         .addClass('shadow')
         .bind('click',function(){
-          console.log(11)
+          // console.log(11)
           let x = this.parentNode.rowIndex
           let y = this.cellIndex
-          curblock = {x:x,y:y}
-          console.log(curblock)
-          $(this).removeClass('shadow')
-          console.log(boomBlock)
-          console.log(boomBlock.has(curblock))
+          curblock = x+':'+y
+          // console.log(curblock)
+          if($(this)[0].className.match('shadow')){$(this).removeClass('shadow')}
+          
+          // console.log(boomBlock)
+          // console.log(boomBlock.has(curblock))
           if(boomBlock.has(curblock)){
-            console.log(boom)
+            // console.log(1++)
             $(this).addClass('boom')
             alert('Game over')
           }else if(numBlock.has(curblock)){
             $(this).children().css('display','block')
           }else{
-            // checkAround()
+            checkAround(x,y)
           }
         })
+}
+
 // console.log($(name).find('td'))
+
+// 检查四周方块有没有空白格，有则打开
+function checkAround(x,y){
+  console.log(x+':'+y)
+  let objs = [
+    (x-1)+':'+y,
+    x+':'+(y-1),
+    x+':'+(y+1),
+    (x+1)+':'+y,
+  ]
+  objs.forEach(obj=>{
+    // console.log(1)
+    if(numBlock.has(obj)){
+      // console.log(2)
+      return false 
+      }else if(boomBlock.has(obj)){
+        // console.log(3)
+        return false
+      }else{
+        let arr = obj.split(':')
+        let a = parseInt(arr[0])
+        let b = parseInt(arr[1])
+        // console.log(a+"==="+b)
+        $(name).children()[0].rows[a].cells[b].className = ''
+        checkAround(a,b)
+      }
+    })
+}
+
+random(name)
+
+
+$('input').bind('click',function(){
+  let curname = this.value
+  console.log(curname)
+  if(curname != 'New Game'){
+    name = '#'+curname
+    random(name)
+  }else{
+    random(name)
+  }
+})
+
+function clear(name){
+  $(name).find('td').removeClass('shadow num boom')
+}
