@@ -33,5 +33,13 @@
   /*display: inline-block;*/
   border: 1px solid #827e70;
   background-color: #b2b2b2;
+  /*box-shadow: inset -2px -2px 2px #fff;*/
+}
+.shadow {
   box-shadow: inset -2px -2px 5px #fff;
+}
+.boom {
+  background: url(boom.png) no-repeat;
+  background-size: 19px 19px;
+  /*opacity: 0;*/
 }
