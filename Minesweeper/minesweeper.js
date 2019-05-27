@@ -1,44 +1,3 @@
-// // 点击效果
-// let tdobj = document.querySelectorAll("#map-junior td")
-// console.log(tdobj)
-// for(let i=0;i<tdobj.length;i++){
-//   tdobj[i].addEventListener("click",function(){
-//     this.style.boxShadow = ' 0 0 0'
-//   })
-// }
-
-
-
-// let map = document.querySelectorAll('#map>div')
-// for(let i=1;i<map.length;i++){
-//   map[i].style.display = 'none'
-// }
-
-// let button = document.querySelectorAll('input')
-// for(let i=0;i<button.length;i++){
-//   button[i].addEventListener('click',function(){
-//     // console.log(this.value)
-//     let name = '#' + this.value
-//     if(name != 'New Game'){
-//       let obj = document.querySelector(name)
-//       if(obj.style.display == 'none'){
-//         let dv = document.querySelectorAll('#map>div')
-//         for(let y=0;y<dv.length;y++){
-//           dv[y].style.display = 'none'
-//         }
-//         obj.style.display = 'block'
-//       }
-//     }else{
-//       regame()
-//     }
-//   })
-// }
-
-// function regame(){
-
-// }
-
-
 // 1. 默认为初级
 let block = new Map() // 所有方块
 let boomBlock = new Map() // 有炸弹的方块
@@ -63,6 +22,7 @@ function random(name){
     // console.log(boomBlock.has(obj))
     if(!boomBlock.has(obj)){
       boomBlock.set(obj,true)
+      block.set(obj,true)
       i++
       // console.log(boomBlock.size)
     }
@@ -123,7 +83,15 @@ function star(name){
             alert('Game over')
           }else if(numBlock.has(curblock)){
             $(this).children().css('display','block')
+            block.set(curblock,true)
+            if(block.size == ((name == '#junior')?81:((name == '#middle')?256:480))){
+              alert('win')
+            }
           }else{
+            block.set(curblock,true)
+            if(block.size == ((name == '#junior')?81:((name == '#middle')?256:480))){
+              alert('win')
+            }
             checkAround(x,y)
           }
         })
@@ -153,9 +121,12 @@ function checkAround(x,y){
           if(!boomBlock.has(obj)){
             // console.log(3)
             blankBlock.set(obj,true)
-            
+            block.set(obj,true)
             // console.log(a+"==="+b)
             $(name).children()[0].rows[a].cells[b].className = ''
+            if(block.size == ((name == '#junior')?81:((name == '#middle')?256:480))){
+              alert('win')
+            }
             checkAround(a,b)
           }   
         }
