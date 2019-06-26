@@ -12,20 +12,56 @@
     <title>Document</title>
 </head>
 <body>
-    <canvas id="map" width="1024" height="600"></canvas>
+    <canvas id="map" width="1200" height="600"></canvas>
 
     <script>
         var map = document.querySelector("#map")
 
         function Fireworks(){
-            this.init()
+          this.firearr = []
+          this.color = ["red","orange","yellow","green","blue","cyan","purple"]
+          let that = this
+          this.init()
+          let timeID = setInterval(function(){
+            this.fire()
+          }.bind(that),100)
+          
         }
 
         Fireworks.prototype.init = function(map){
-            var map = map || document.querySelector("canvas")
-            this.ctx = map.getContext("2d")
-            this.ctx.fillStyle = "cyan"
-            this.ctx.fillRect(0,0,1024,600)
+          var map = map || document.querySelector("canvas")
+          this.ctx = map.getContext("2d")
+          this.ctx.fillStyle = "cyan"
+          this.ctx.fillRect(0,0,1200,600)
+
+        }
+
+        Fireworks.prototype.fire = function(){
+          if(this.firearr.length <= 3){
+            var x = parseInt(Math.random()*200 + 500)
+            var speed = parseInt(Math.random()*20+5)
+            var direction = (parseInt(Math.random()*10)>5) ? 1 : -1 
+            var color = (Math.floor(Math.random()*8))
+            this.firearr.push({x:x,y:600,speed:speed,count:0,direction:direction,color:this.color[color]})
+          }
+          this.ctx.clearRect(0,0,1200,600)
+          this.ctx.fillStyle="cyan"
+          for(let i=0;i<this.firearr.length;i++){
+            let obj = this.firearr[i]
+            if(obj.count < 20){
+              
+              this.ctx.beginPath()
+              this.ctx.arc(obj.x,obj.y,20,0,2*Math.PI)
+              this.ctx.fillStyle = obj.color
+              this.ctx.closePath()
+              this.ctx.fill()
+              console.log(1)
+              obj.count++
+              obj.x += obj.speed*obj.direction
+              obj.y -= obj.speed
+            }
+          }
+          
 
         }
 
