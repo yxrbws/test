@@ -18,7 +18,8 @@
         var map = document.querySelector("#map")
 
         function Fireworks(){
-          this.firearr = []
+          this.firearr = [] // 发射中的烟火
+          this.booms = [] // 爆炸的烟火
           this.color = ["red","orange","yellow","green","blue","cyan","purple"]
           let that = this
           this.init()
@@ -49,7 +50,6 @@
           for(let i=0;i<this.firearr.length;i++){
             let obj = this.firearr[i]
             if(obj.count < 20){
-              
               this.ctx.beginPath()
               this.ctx.arc(obj.x,obj.y,20,0,2*Math.PI)
               this.ctx.fillStyle = obj.color
@@ -59,9 +59,25 @@
               obj.count++
               obj.x += obj.speed*obj.direction
               obj.y -= obj.speed
+            }else{
+                this.booms.push(this.firearr.splice(i,1))
+                this.boom()
             }
           }
-          
+         Fireworks.prototype.boom = function(){
+            let n = 30
+            let x = this.booms[0].x
+            let y = this.booms[0].y
+            for(let i=0;i<n;i++){
+                var arc = Math.random(2*Math.PI)
+                var len = Math.random(20)
+                this.ctx.beginPath()
+                this.ctx.arc(x+len*Math.cos(arc),y+len*Math.sin(arc),5,0,2*Math.PI)
+                this.ctx.fillStyle = this.booms[0].color
+                this.ctx.closePath()
+                this.ctx.fill()
+            }
+         }
 
         }
 

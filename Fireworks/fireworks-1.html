@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        canvas{
+            background: cyan;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="map"></canvas>
+
+    <script>
+        let c = document.querySelector("#map")
+        let ctx = c.getContext("2d")
+
+        let v0 = 0
+        let speed = 5
+        let fire = []
+        let boom = []
+        let cw = 1000 //window.Width
+        let ch = 700  //window.Height
+        let color = ["red","orange","yellow","green","blue","cyan","purple"]
+
+        c.width = cw
+        c.height = ch
+
+        function fireworks(){
+            document.addEventListener("click",function(e){
+                let x0 = e.clientX
+                let y0 = e.clientY
+                console.log(x0,y0)
+                let pos = (x0>(cw/2))? 1 : ((x0 == cw/2)? 0 : -1)
+                let co = color[Math.floor(Math.random(8))]
+                boom.push({x:x0,y:y0}) // 烟花爆炸的位置
+                fire.push({x:cw/2,y:ch,time:0,pos:pos,color:co}) // 烟花的当前位置
+                console.log(fire.length)
+            })
+        }
+
+        function distance(star,target){
+            let arc = Math.atan2(star.y-target.y, target.x - star.x)
+            console.log(arc)
+            return arc
+        }
+
+        function move(){
+            for(let i=0;i<fire.length;i++){
+                var star = fire[i]
+                var target = boom[i]
+                var arc = distance(star,target)
+            }
+        }
+
+        function particle(obj){
+
+        }
+
+        fireworks()
+        setInterval(move,50)
+    </script>
+</body>
+</html>
