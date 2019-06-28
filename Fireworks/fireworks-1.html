@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
         canvas{
-            background: cyan;
+            background: black;
         }
     </style>
     <title>Document</title>
@@ -19,7 +19,7 @@
         let ctx = c.getContext("2d")
 
         let v0 = 0
-        let speed = 5
+        let speed = 30
         let fire = []
         let boom = []
         let cw = 1000 //window.Width
@@ -35,29 +35,104 @@
                 let y0 = e.clientY
                 console.log(x0,y0)
                 let pos = (x0>(cw/2))? 1 : ((x0 == cw/2)? 0 : -1)
-                let co = color[Math.floor(Math.random(8))]
+                let co = color[Math.floor(Math.random()*7)]
                 boom.push({x:x0,y:y0}) // 烟花爆炸的位置
                 fire.push({x:cw/2,y:ch,time:0,pos:pos,color:co}) // 烟花的当前位置
                 console.log(fire.length)
+                // move()
             })
         }
 
-        function distance(star,target){
-            let arc = Math.atan2(star.y-target.y, target.x - star.x)
-            console.log(arc)
+        // 返回发射点到目标点的角度
+        function angle(star,target){
+            let arc = Math.atan2(target.y-star.y, target.x - star.x)
+            // console.log(arc)
             return arc
         }
 
+        function distance(star,target){
+            return dis = Math.sqrt(Math.pow(star.x-target.x,2)+Math.pow(star.y-target.y,2))
+        }
+
         function move(){
+            ctx.clearRect(0,0,cw,ch)
             for(let i=0;i<fire.length;i++){
                 var star = fire[i]
                 var target = boom[i]
-                var arc = distance(star,target)
+                console.log(fire)
+                var arc = angle(star,target)
+                var dis = distance(star,target)
+                star.time += 1
+                var movedis = speed*star.time
+                var cx = cw/2 + movedis*Math.cos(arc)
+                var cy = ch + movedis*Math.sin(arc)
+                ctx.beginPath()
+                ctx.moveTo(star.x,star.y)
+                ctx.lineTo(cx,cy)
+                ctx.lineWidth = 2
+                ctx.strokeStyle = star.color
+                console.log(cx,cy)
+                ctx.lineJoin="round"
+                ctx.stroke()
+                ctx.closePath()
+                ctx.fill()
+                if(cy >= target.y){
+                    star.x = cx
+                    star.y = cy
+                }else{
+                    fire.splice(i,1)
+                    particle(boom.splice(i,1))
+                }
+                
             }
         }
 
         function particle(obj){
-
+            console.log("boom")
+            var bm = obj
+            let x0 = bm[0].x
+            let y0 = bm[0].y
+            let lizi = []
+            // let speed = 20
+            for(let i=0;i<=30;i++){
+                var l = Math.random()*30 + 200
+                var arc = parseInt(Math.random()*360)
+                // console.log(arc)
+                var x = l*Math.cos(arc*Math.PI/180)
+                var y = l*Math.sin(arc*Math.PI/180)
+                var speed = Math.random()*20 + 20
+                // console.log(bm.x)
+                lizi.push({tx:x0+x,ty:y0+y,sx:x0,sy:y0,time:0,len:l,arc:arc,speed:speed})
+            }
+            console.log(lizi)
+            console.log(11)
+            var timeID = setInterval(function(){
+                for(let i=0;i<lizi.length;i++){
+                    var lz = lizi[i]
+                    let dis = lz.len
+                    let arc = lz.arc
+                    lz.time += 1
+                    var len = lz.speed*lz.time
+                    let cx = bm[0].x + len*Math.cos(arc*Math.PI/180)
+                    let cy = bm[0].y + len*Math.sin(arc*Math.PI/180)
+                    ctx.beginPath()
+                    ctx.moveTo(lz.sx,lz.sy)
+                    ctx.lineTo(cx,cy)
+                    ctx.lineWidth = 1
+                    ctx.strokeStyle = bm[0].color
+                    ctx.stroke()
+                    console.log(22)
+                    if(len >= dis){
+                        lizi.splice(i,1)
+                    }else{
+                        lz.sx = cx
+                        lz.sy = cy
+                    }
+                }
+                if(lizi.length <= 0){clearInterval(timeID)}
+            },50)
+            
+            
         }
 
         fireworks()
