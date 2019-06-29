@@ -30,7 +30,7 @@
         c.height = ch
 
         function fireworks(){
-            document.addEventListener("click",function(e){
+            document.addEventListener("mousedown",function(e){
                 let x0 = e.clientX
                 let y0 = e.clientY
                 console.log(x0,y0)
@@ -66,10 +66,15 @@
                 var movedis = speed*star.time
                 var cx = cw/2 + movedis*Math.cos(arc)
                 var cy = ch + movedis*Math.sin(arc)
+                
                 ctx.beginPath()
+                // var gradient = ctx.createLinearGradient(star.x,star.y,cx,cy)
                 ctx.moveTo(star.x,star.y)
                 ctx.lineTo(cx,cy)
+                // gradient.addColorStop("0","black")
+                // gradient.addColorStop("1",star.color)
                 ctx.lineWidth = 2
+                // ctx.strokeStyle = gradient
                 ctx.strokeStyle = star.color
                 console.log(cx,cy)
                 ctx.lineJoin="round"
@@ -118,7 +123,7 @@
                     ctx.beginPath()
                     ctx.moveTo(lz.sx,lz.sy)
                     ctx.lineTo(cx,cy)
-                    ctx.lineWidth = 1
+                    ctx.lineWidth = 2
                     ctx.strokeStyle = bm[0].color
                     ctx.stroke()
                     console.log(22)
@@ -130,13 +135,13 @@
                     }
                 }
                 if(lizi.length <= 0){clearInterval(timeID)}
-            },50)
+            },30)
             
             
         }
 
         fireworks()
-        setInterval(move,50)
+        setInterval(move,30)
     </script>
 </body>
 </html>
