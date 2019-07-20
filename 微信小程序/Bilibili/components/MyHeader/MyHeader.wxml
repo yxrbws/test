@@ -1,0 +1,14 @@
+<view class="MyHeader">
+    <navigator class="logo">
+        <image class="logo_image" style="width:140rpx;height:60rpx;" src="../../icon/logo.png" mode="aspectFit"></image>
+    </navigator>
+    <view class="search_icon">
+        <image src="../../icon/search.png" style="width:60rpx;height:44rpx;" mode="aspectFit"></image>
+    </view>
+    <view class="user_icon">
+        <image src="../../icon/user.png" style="width:54rpx;height:60rpx;" mode="aspectFit"></image>
+    </view>
+    <view class="download">
+        下载 APP
+    </view>
+</view>

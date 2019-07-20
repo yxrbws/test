@@ -1,0 +1,29 @@
+<view class="container">
+    <MyHeader></MyHeader>
+    <view class="video-wrap">
+        <video src="{{videoInfo.videoSrc}}" />
+        <view class="video-info">{{videoInfo.videoTitle}}</view>
+        <view class="video-msg">
+            <view class="video-author">{{videoInfo.author}}</view>
+            <view>{{videoInfo.playCount}}次观看</view>
+            <view>{{videoInfo.commentCount}}弹幕</view>
+            <view>{{videoInfo.date}}</view>
+        </view>
+    </view>
+    <view class="recommendList">
+        <navigator class="recommend" url="info?id={{item.index}}" wx:for="{{otherList}}" wx:key="{{index}}">
+            <view class="wrap">
+                <view class="wrap-img">
+                    <image src="{{item.imgSrc}}"></image>
+                </view>
+                <view class="wrap-info">
+                    <text>{{item.title}}</text>
+                    <view class="wrap-info-detail">
+                        <view>{{item.playMsg}}次播放</view>
+                        <view>{{item.commentCount}}弹幕</view>
+                    </view>
+                </view>
+            </view>
+        </navigator>
+    </view>
+</view>

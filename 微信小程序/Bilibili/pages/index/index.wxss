@@ -1,0 +1,76 @@
+.nav-wrap{}
+.nav{
+    white-space: nowrap;
+    padding: 5rpx 0;
+}
+.nav-item{
+    display: inline-block;
+    padding: 20rpx 40rpx;
+    font-size: 30rpx;
+}
+.active{
+    border-bottom: 5rpx solid #fb7299;
+}
+
+/* 轮播图 */
+.swiper-wrap{
+    margin-top: 10rpx;
+    padding: 10rpx;
+}
+.swiper{
+    height: 220rpx;
+}
+.swiper-item{
+    width: 100%;
+    height: 100%;
+}
+.swiper-img{
+    width: 100%;
+    height: 100%;
+}
+
+/* 推荐视频 */
+.recommend-wrap{
+    margin-top: 10rpx;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.recommend-item{
+    width: 47%;
+    padding: 10rpx;
+    /* border-radius: 10rpx; */
+}
+.recommend-video{
+    position: relative;
+    width: 100%;
+    height: 220rpx;
+}
+.recommend-video image{
+    width: 100%;
+    height: 220rpx;
+    border-radius: 10rpx;
+}
+.recommend-video .video-info{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 10rpx;
+    color: #eee;
+}
+.video-info view{
+    width: 50%;
+    text-align: center;
+    font-size: 24rpx;
+}
+.recommend-info{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    font-size: 24rpx;
+}
+    
