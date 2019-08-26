@@ -12,6 +12,8 @@ Vue.use(Vuex)
 
 import 'swiper/dist/css/swiper.min.css'
 
+import 'bootstrap/dist/css/bootstrap.css'
+
 Vue.config.productionTip = false
 
 const store = new Vuex.Store({

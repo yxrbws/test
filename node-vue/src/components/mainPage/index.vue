@@ -15,7 +15,7 @@
 
         <div class="shopList">
             <div class="listTitle">
-                <span class="glyphicon glyphicon-glass"></span>
+                <span class=""></span>
                 <span class="listInfo">附近商家</span>
             </div>
             <ul>
@@ -67,6 +67,9 @@ export default {
             shopList: []
         }
     },
+    // components:{
+    //     foot
+    // },
     methods:{
         getShopCategory(){
             this.$http.get('https://elm.cangdu.org/v2/index_entry').then(res => {
