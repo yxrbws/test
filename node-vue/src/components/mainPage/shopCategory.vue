@@ -1,23 +1,13 @@
 <template>
-    <div class="indexContainer">
-        <div class="shopCategory">
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide" v-for="item in shopCategory" :key="item.id" @click="goToShopCategory(item.id)">
-                        <img :src="'https://fuss10.elemecdn.com' + item.image_url" :alt="item.title">
-                        <span>{{item.title}}</span>
-                    </div>
-                </div>
-                <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
-            </div>
+    <div class="categoryContainer">
+        <div>
+            <ul>
+                <li>分类</li>
+                <li>排序</li>
+                <li>筛选</li>
+            </ul>
         </div>
-
         <div class="shopList">
-            <div class="listTitle">
-                <span class=""></span>
-                <span class="listInfo">附近商家</span>
-            </div>
             <ul>
                 <li class="clear list" v-for="item in shopList" :key="item.id" @click="goToShopInfo()">
                     <div class="img">
@@ -57,97 +47,22 @@
 </template>
 
 <script>
-import Swiper from 'swiper'
-import 'swiper/dist/css/swiper.min.css'
 export default {
     data(){
         return {
-            shopCategory: [],
-            shopCategoryLen: null,
             shopList: []
         }
-    },
-    // components:{
-    //     foot
-    // },
-    methods:{
-        getShopCategory(){
-            this.$http.get('https://elm.cangdu.org/v2/index_entry').then(res => {
-                this.shopCategory = res.data
-                this.shopCategoryLen = res.data.length
-            })
-        },
-        lunbo(){
-            let len = this.shopCategoryLen
-                var swiper = new Swiper('.swiper-container', {
-                    slidesPerView: 4,
-                    slidesPerColumn: 2,
-                    spaceBetween: 30,
-                    observer: true,
-                    observeParents: true,
-                    pagination: {
-                        el: '.swiper-pagination',
-                        clickable: true,
-                    },
-            });
-        },
-        getShopList(){
-            let geohash = this.$route.query.geohash.split(',')
-            console.log(geohash)
-            this.$http.get('https://elm.cangdu.org/shopping/restaurants?latitude='+geohash[0]+'&longitude='+geohash[1]).then(res => {
-                this.shopList = res.data
-            })
-        },
-        goToShopCategory(){
-            this.$router.push({name: 'shopCategory'})
-        }
-    },
-    mounted(){
-        this.lunbo()
-        this.getShopCategory()
-        this.getShopList()
     }
 }
 </script>
 
 <style lang='scss' scoped>
-    .indexContainer{
-        .shopCategory{
-            background-color: #fff;
-            border-bottom: 1px solid #ddd;
-            .swiper-container{
-                width: 100%;
-                height: auto;
-                padding: 5px;
-                .swiper-slide{
-                    height: 80px;
-                    text-align: center;
-                    img{
-                        display: block;
-                        width: 80%;
-                        height: 65%;
-                    }
-                    span{
-                        font-size: 14px;
-                    }
-                }
-            }
-        }
-        
+    .categoryContainer{
+
         .shopList{
             border-top: 1px solid #ddd;
             background-color: #fff;
             margin-top: 5px;
-            .listTitle{
-                height: 20px;
-                width: 100%;
-                text-indent: 10px;
-                .listInfo{
-                    color: #999;
-                    line-height: 20px;
-                    font-size: 14px;
-                }
-            }
             ul{
                 list-style: none;
                 width: 100%;

@@ -29,5 +29,7 @@ export default {
   }
   #app{
     background-color: #f5f5f5;
+    position: relative;
+    height: 100%;
   }
 </style>

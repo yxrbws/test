@@ -13,15 +13,15 @@
         </div>
 
         <div class="personGoods">
-            <div class="money">
+            <div class="money" @click="goTo('moneyInfo')">
                 <span><b>{{money}}</b>元</span>
                 <span>我的余额</span>
             </div>
-            <div class="Coupon">
+            <div class="Coupon" @click="goTo('coupon')">
                 <span><b>{{coupon}}</b>个</span>
                 <span>我的优惠</span>
             </div>
-            <div class="integral">
+            <div class="integral" @click="goTo('integralInfo')">
                 <span><b>{{integral}}</b>分</span>
                 <span>我的积分</span>
             </div>
@@ -30,17 +30,17 @@
         <div class="personProfit">
             <ul>
                 <li>
-                    <a>
+                    <a @click="goTo('order')">
                         <span class="glyphicon glyphicon-list-alt"></span>我的订单<span class="glyphicon glyphicon-chevron-right"></span>
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <a @click="goTo('integralShop')">
                         <span class="glyphicon glyphicon-bookmark"></span>积分商城<span class="glyphicon glyphicon-chevron-right"></span>
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <a @click="goTo('vip')">
                         <span class="glyphicon glyphicon-king"></span>饿了么会员卡<span class="glyphicon glyphicon-chevron-right"></span>
                     </a>
                 </li>
@@ -50,12 +50,12 @@
         <div class="customerService">
             <ul>
                 <li>
-                    <a>
+                    <a @click="goTo('service')">
                         <span></span>服务中心<span class="glyphicon glyphicon-chevron-right"></span>
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <a @click="goTo('download')">
                         <span></span>下载饿了么APP<span class="glyphicon glyphicon-chevron-right"></span>
                     </a>
                 </li>
@@ -71,6 +71,12 @@ export default {
             money: 0.00,
             coupon: 0,
             integral: 0
+        }
+    },
+    methods:{
+        goTo(key){
+            console.log(key)
+            this.$router.push({name: key})
         }
     }
 }
