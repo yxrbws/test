@@ -41,6 +41,7 @@ export default {
             this.$http.get('https://elm.cangdu.org/v1/cities?type=guess').then(res => {
                 this.currentLocalCity = res.data.name
                 this.currentLocalCityId = res.data.id
+                console.log(this.currentLocalCity)
             })
             this.$http.get('https://elm.cangdu.org/v1/cities?type=hot').then(res => {
                 this.hotcitylist = res.data
@@ -52,10 +53,12 @@ export default {
                 // })
                 var keys = Object.keys(res.data).sort()
                 console.log(keys)
+                let allcity = {}
                 for(var i=0;i<keys.length;i++){
                     var index = keys[i]
-                    this.allcitylist[index] = res.data[index]
+                    allcity[index] = res.data[index]
                 }
+                this.allcitylist = allcity
                 // console.log(this.allcitylist)
             })
         },

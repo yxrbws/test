@@ -3,7 +3,7 @@
         <div class="shopCategory">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide" v-for="item in shopCategory" :key="item.id" @click="goToShopCategory(item.id)">
+                    <div class="swiper-slide" v-for="item in shopCategory" :key="item.id" @click="goToShopCategory(item.id,item.title)">
                         <img :src="'https://fuss10.elemecdn.com' + item.image_url" :alt="item.title">
                         <span>{{item.title}}</span>
                     </div>
@@ -98,8 +98,8 @@ export default {
                 this.shopList = res.data
             })
         },
-        goToShopCategory(){
-            this.$router.push({name: 'shopCategory'})
+        goToShopCategory(id,title){
+            this.$router.push({name: 'shopCategory', query:{id:id,title:title}})
         }
     },
     mounted(){
