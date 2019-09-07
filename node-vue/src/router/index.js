@@ -20,15 +20,14 @@ import service from '@/components/mainPage/customerService/service.vue'
 import download from '@/components/mainPage/customerService/download.vue'
 import answer from '@/components/mainPage/customerService/answer.vue'
 
+import shopInfo from '@/components/shopPage/shopInfo.vue'
+
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: '/',
-      name: 'getLocal',
-      component: getLocal
-    },
+    { path: '/', redirect: '/getLocal' },
+    { path: '/getLocal', name: 'getLocal', component: getLocal},
     { path: '/getExact/:id',name: 'getExact',component: getExactLocal},
     { path: '/index', name:'index', component: index},
     { path: '/search', name:'search', component: search},
@@ -42,6 +41,7 @@ export default new Router({
     { path: '/service', name:'service', component: service},
     { path: '/download', name:'download', component: download},
     { path: '/answer', name:'answer', component: answer},
-    { path: '/shopCategory', name:'shopCategory', component: shopCategory}
+    { path: '/shopCategory', name:'shopCategory', component: shopCategory},
+    { path: '/shopInfo', name:'shopInfo', component: shopInfo}
   ]
 })

@@ -19,7 +19,7 @@
                 <span class="listInfo">附近商家</span>
             </div>
             <ul>
-                <li class="clear list" v-for="item in shopList" :key="item.id" @click="goToShopInfo()">
+                <li class="clear list" v-for="item in shopList" :key="item.id" @click="goToShopInfo(item.id)">
                     <div class="img">
                         <img :src="'//elm.cangdu.org/img/'+item.image_path" alt="">
                     </div>
@@ -100,6 +100,9 @@ export default {
         },
         goToShopCategory(id,title){
             this.$router.push({name: 'shopCategory', query:{id:id,title:title}})
+        },
+        goToShopInfo(id){
+            this.$router.push({name: 'shopInfo', query:{id:id}})
         }
     },
     mounted(){

@@ -32,4 +32,11 @@ export default {
     position: relative;
     height: 100%;
   }
+  .tishixiaoxi{
+      width: 200px;
+      height: auto;
+  }
+  .el-dialog--center .el-dialog__body{
+    padding: 10px;
+  }
 </style>
