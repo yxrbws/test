@@ -48,6 +48,7 @@ exports.cssLoaders = function (options) {
       return ExtractTextPlugin.extract({
         use: loaders,
         fallback: 'vue-style-loader',
+        // icon 图标路径
         publicPath: '../../'
       })
     } else {
