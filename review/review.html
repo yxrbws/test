@@ -8,13 +8,15 @@
   <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
   <title>Document</title>
   <style>
-    body{
+    body {
       background: #fdfcf8;
     }
-    .box{
+
+    .box {
       margin: 10px auto;
     }
-    a{
+
+    a {
       font-size: 12px;
     }
   </style>
@@ -84,13 +86,17 @@
       el: '#app',
       data: {
         jsquestion: [{
+          q: 'js数据类型',
+          a: `1.值类型(基本类型): String , Number , Boolean , Null , Undefined , Symbol
+              <br />2.引用数据类型: Object , Array , Function`
+        },{
           q: '怎么判断数据类型',
-          a: `1.typeof。 可以检测出string、number、function、undefined、boolean,但无法判断出object中的对象、数组等方法。typeof null 也等于 object
+          a: `1.typeof。 判断变量类型，可以检测出string、number、function、undefined、boolean,但无法判断出object中的对象、数组等方法。typeof null 也等于 object
               <br />2.instanceof。 检测对象数据类型（js中一切接对象） 表示当左侧为右侧的实例时返回true ( a instanceof String)
               <br />3.Object.prototype.toString.call()。 能准确判断类型 (Object.prototype.toString.call(a) === '[object String]')
               <br />4.constructor。 为实例原型上的方法，指向他的构造函数 ( a.constructor === Array)
               <br />5.jQuery.type()。 函数用于确定JavaScript内置对象的类型，并返回小写形式的类型名称`
-        },{
+        }, {
           q: '闭包',
           a: `定义：当一个嵌套的内部函数引用了外部函数的变量或者函数时，外部函数在执行时就产生了闭包。
               <br />闭包指的是：能够访问另一个函数作用域的变量的函数。清晰的讲：闭包就是一个函数，这个函数能够访问其他函数的作用域中的变量
@@ -98,14 +104,29 @@
               <br />1.函数嵌套函数
               <br />2.函数内部可以引用外部的参数和变量
               <br />3.参数和变量不会被垃圾回收机制回收`
-        },{
+        }, {
           q: 'callee,caller,call,apply和bind',
           a: `callee: callee是一个指针，指向拥有这个argument对象的函数,callee 属性是 arguments 对象的一个成员，它表示对函数对象本身的引用
               <br />caller: caller这个属性保存着调用当前函数的函数的引用，如果是在全局作用域中调用当前函数，它的值为null。
-              <br />apply是改变函数执行的作用域的，说的通俗点就是改变函数体内this的指向，apply第二个参数可以是Array实例，也可以是argument对象
-              <br />call也是改变函数执行的作用域的，和apply一样，不同的是call的接受参数必须逐个列出来
-              <br />这个方法会创建一个函数的实例，其this值会被绑定到传给bind()函数的值`
+              <br />apply:是改变函数执行的作用域的，说的通俗点就是改变函数体内this的指向，apply第二个参数可以是Array实例，也可以是argument对象
+              <br />call:也是改变函数执行的作用域的，和apply一样，不同的是call的接受参数必须逐个列出来
+              <br />bind:这个方法会创建一个函数的实例，其this值会被绑定到传给bind()函数的值
+              <div><a href='https://blog.csdn.net/yc123h/article/details/52729484'>参考连接dds</a></div>`
         },{
+          q: 'new操作符原理',
+          a: `1.创建一个空对象
+              <br />2.将空对象的原型指向构造函数的原型
+              <br />3.将空对象作为构造函数的上下文(改变this指向)
+              <br />4.对构造函数有返回值的判断
+              <div><a href='https://zhuanlan.zhihu.com/p/158640941'>参考连接dds</a></div>`
+        }, {
+          q: 'js继承方式',
+          a: `1.构造函数继承
+              <br />2.原型实例继承
+              <br />3.原型直接继承
+              <br />4.ES6中Class继承
+              <div><a href="https://zhuanlan.zhihu.com/p/81266626">参考连接</a></div>`
+        }, {
           q: '深拷贝和浅拷贝',
           a: `浅拷贝：就是简单的复制,就相当于把一个对象中的所有的内容,复制一份给另一个对象。
               <br />深拷贝: 把一个对象的属性和方法一个个找出来，在另一个对象中开辟对应的空间，一个个存储到另一个对象中。
@@ -116,13 +137,13 @@
               <br />3.Object.assign() 当对象中只有一级属性，没有二级属性的时候，此方法为深拷贝，但是对象中有对象的时候，此方法，在二级属性以后就是浅拷贝 ( obj = Object.assign({},obj) )
               <br />4.使用递归实现
               <div><img src='./deepclone.jpg'></div>`
-        },{
+        }, {
           q: '防抖(debounce)和节流(throttle)',
           a: `防抖：当持续触发事件时，一定时间段内没有再触发事件，事件处理函数才会执行一次，如果设定时间到来之前，又触发了事件，就重新开始延时
               <br />节流：当持续触发事件时，保证在一定时间内只调用一次事件处理函数，意思就是说，假设一个用户一直触发这个函数，且每次触发小于既定值，函数节流会每隔这个时间调用一次
               <br />用一句话总结防抖和节流的区别：防抖是将多次执行变为最后一次执行，节流是将多次执行变为每隔一段时间执行
               <br />实现函数节流我们主要有两种方法：时间戳和定时器`
-        },{
+        }, {
           q: '重绘和重排(回流)',
           a: `浏览器解析页面的过程
               <br />首先加载dom结构形成dom树-->然后加载css-->dom树和css结合形成render树 -->渲染页面
@@ -132,7 +153,7 @@
               <br />解决方案:
               <br />1.如果是在页面的末尾修改dom直接用字符串拼接到原有结构的后面即可
               <br />2.避免多次修改dom结构或者css,集中处理，只引发一次重绘或者重排`
-        },{
+        }, {
           q: 'js设计模式',
           a: `1.工厂模式：工厂模式定义一个用于创建对象的接口，这个接口由子类决定实例化哪一个类。该模式使一个类的实例化延迟到了子类。而子类可以重写接口方法以便创建的时候指定自己的对象类型。
               &nbsp&nbsp工厂模式是用来创建对象的一种最常用的设计模式。我们不暴露创建对象的具体逻辑，而是将逻辑封装在一个函数中，那么这个函数就可以被视为一个工厂。
@@ -149,7 +170,7 @@
               <br />11.组合模式：又叫 “部分整体” 模式，将对象组合成树形结构，以表示 “部分-整体” 的层次结构。通过对象的多态性表现，使得用户对单个对象和组合对象的使用具有一致性。
               <br />12.建造者模式：是将一个复杂对象的构建层与其表示层相互分离，同样的构建过程可采用不同的表示。
               <div> <a href='https://blog.csdn.net/weixin_46124214/article/details/105066290' target='_blank' style='font-size:12px'>参考链接 </div>`
-        },{
+        }, {
           q: '原型链',
           a: `1、原型链是JS特有的一种继承机制
               <br />2.所有原型链的终点都是 Object 函数的 prototype 属性,指向最终顶端 null
@@ -158,7 +179,7 @@
               <br />4、应用场景：继承
               <br />5、优点：把相同或类似的方法写在原型上，方便实例化对象复用
               <div><img src='./yuanxinglian.jpg'></div>`
-        },{
+        }, {
           q: '跨域的方式',
           a: `跨域是指一个域下的文档或脚本试图去请求另一个域下的资源，这里跨域是广义的
               <br />同源策略/SOP（Same origin policy）是一种约定，由Netscape公司1995年引入浏览器，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，浏览器很容易受到XSS、CSFR等攻击。
@@ -180,7 +201,7 @@
               <br />9.nginx代理跨域
               <div><a href="https://www.cnblogs.com/ly1368489670/p/13924122.html" style="font-size:12px">跨域方式参考连接</a>  
                 <a href='http://www.ruanyifeng.com/blog/2016/04/cors.html' style="font-size:12px">跨域资源共享 CORS 详解</a></div>`
-        },{
+        }, {
           q: 'EventLoop',
           a: `JavaScript语言的一大特点就是单线程，也就是说，同一个时间只能做一件事。单线程就意味着，所有任务需要排队，前一个任务结束，才会执行后一个任务。
               <br />如果前一个任务耗时很长，后一个任务就不得不一直等着。
@@ -200,7 +221,7 @@
           q: 'css盒模型',
           a: `W3C标准盒模型(content-box)：属性width,height只包含内容content，不包含border和padding
               <br />IE盒模型(border-box)：属性width,height包含border和padding，指的是content+padding+border`
-        },{
+        }, {
           q: 'flex',
           a: `容器属性： 
               <br />flex-direction： row | row-reverse | colomn | colomn-reverse 决定主轴方向
@@ -216,10 +237,10 @@
               <br />flex-basis: <length> 定义了在分配多余空间之前，项目占据的主轴空间。默认值为auto，即项目本来大小
               <br />flex: [<flex-grow> <flex-shrink> <flex-basis>] flex为三个属性的简写，默认为 0 1 auto
               <br />align-self: auto | flex-start | flex-end | center | baseline | stretch 属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性`
-        },{
+        }, {
           q: 'grid(栅格布局)',
           a: `<div><a href='http://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html' style='font-size:12px;'>参考链接</div>`
-        },{
+        }, {
           q: 'BFC(Block Formatting Context)和IFC(inline Formatting Context)',
           a: `BFC(块级格式化上下文):
               <br />1.内部的盒子会在垂直的方向，一个个地放置
@@ -237,7 +258,7 @@
               <br />1.内部的盒子会在水平方向，一个个地放置
               <br />2.IFC的高度，由里面最高盒子的高度决定
               <br />3.当一行不够放置的时候回自动切换到下一行`
-        },{
+        }, {
           q: '水平垂直居中',
           a: `1.绝对定位
               <br />position:absolute;
@@ -252,7 +273,7 @@
               <br />display: table-cell;
               <br />vertical-align: middle;
               <br />text-align: center;`
-        },{
+        }, {
           q: '文字超出显示省略号',
           a: `单行：
               <br />overflow: hidden;
@@ -263,13 +284,13 @@
               <br />-webkit-box-orient: vertical;
               <br />-webkit-line-clamb: 3;
               <br />overflow: hidden;`
-        },{
+        }, {
           q: '清楚浮动',
           a: `1.在浮动元素后面添加一个空元素样式为clear:both
               <br />2.给浮动元素的容器添加overflow:hidden/auto 使浮动元素又回到了容器层，把容器高度撑起，达到了清理浮动的效果。可以清除浮动.另外在 IE6 中还需要触发 hasLayout ，例如为父元素设置容器宽高或设置 zoom:1
               <br />3.给浮动元素的容器也添加上浮动属性即可清除内部浮动，但是这样会使其整体浮动，影响布局
               <br />4.给浮动元素的容器添加一个clearfix的class，然后给这个class添加一个:after伪元素实现元素末尾添加一个看不见的块元素（Block element）清理浮动`
-        },{
+        }, {
           q: 'css优化技巧',
           a: `1.合理使用选择器
               <br />2.减少DOM操作，减少重绘和重排
@@ -277,13 +298,66 @@
               <br />4.文件压缩
               <br />5.异步加载文件
               <br />6.减少@import的使用`
-        },{
+        }, {
           q: 'px/em/rem/vh/vw',
           a: `px: 像素(Pixel)，相对长度单位。像素px是相对于显示器屏幕的分辨率而言的
               <br />em: em是相对长度单位。相当于当前父元素的字体尺寸，如未设置，则相对于浏览器的默认字体尺寸
               <br />rem: rem是css3新增的一个相对单位。使用rem为元素设定字体大小时，仍然是相对大小，但相对的只是HTML根元素
               <br />vh： css3新单位，view height的简写，是指可视窗口的高度，假如高度是1200px的话，那10vh就是120px
               <br />vw： css3新单位，view width的简写，是指可视窗口的宽度，假如宽度是1200px的话，那10vw就是120px`
+        }, {
+          q: 'css的继承属性',
+          a: `
+              一、无继承性的属性
+              <br />1、display：规定元素应该生成的框的类型
+              <br />2、文本属性：
+              <br />vertical-align：垂直文本对齐
+              <br />text-decoration：规定添加到文本的装饰
+              <br />text-shadow：文本阴影效果
+              <br />white-space：空白符的处理
+              <br />unicode-bidi：设置文本的方向
+              <br />3、盒子模型的属性：width、height、margin 、margin-top、margin-right、margin-bottom、margin-left、border、border-style、border-top-style、border-right-style、border-bottom-style、border-left-style、border-width、border-top-width、border-right-right、border-bottom-width、border-left-width、border-color、border-top-color、border-right-color、border-bottom-color、border-left-color、border-top、border-right、border-bottom、border-left、padding、padding-top、padding-right、padding-bottom、padding-left
+              <br />4、背景属性：background、background-color、background-image、background-repeat、background-position、background-attachment
+              <br />5、定位属性：float、clear、position、top、right、bottom、left、min-width、min-height、max-width、max-height、overflow、clip、z-index
+              <br />6、生成内容属性：content、counter-reset、counter-increment
+              <br />7、轮廓样式属性：outline-style、outline-width、outline-color、outline
+              <br />8、页面样式属性：size、page-break-before、page-break-after
+              <br />9、声音样式属性：pause-before、pause-after、pause、cue-before、cue-after、cue、play-during
+              <br />二、有继承性的属性
+              <br />1、字体系列属性
+              <br />font：组合字体
+              <br />font-family：规定元素的字体系列
+              <br />font-weight：设置字体的粗细
+              <br />font-size：设置字体的尺寸
+              <br />font-style：定义字体的风格
+              <br />font-variant：设置小型大写字母的字体显示文本，这意味着所有的小写字母均会被转换为大写，但是所有使用小型大写字体的字母与其余文本相比，其字体尺寸更小。
+              <br />font-stretch：对当前的 font-family 进行伸缩变形。所有主流浏览器都不支持。
+              <br />font-size-adjust：为某个元素规定一个 aspect 值，这样就可以保持首选字体的 x-height。
+              <br />2、文本系列属性
+              <br />text-indent：文本缩进
+              <br />text-align：文本水平对齐
+              <br />line-height：行高
+              <br />word-spacing：增加或减少单词间的空白（即字间隔）
+              <br />letter-spacing：增加或减少字符间的空白（字符间距）
+              <br />text-transform：控制文本大小写
+              <br />direction：规定文本的书写方向
+              <br />color：文本颜色
+              <br />3、元素可见性：visibility
+              <br />4、表格布局属性：caption-side、border-collapse、border-spacing、empty-cells、table-layout
+              <br />5、列表布局属性：list-style-type、list-style-image、list-style-position、list-style
+              <br />6、生成内容属性：quotes
+              <br />7、光标属性：cursor
+              <br />8、页面样式属性：page、page-break-inside、windows、orphans
+              <br />9、声音样式属性：speak、speak-punctuation、speak-numeral、speak-header、speech-rate、volume、voice-family、pitch、pitch-range、stress、richness、、azimuth、elevation
+              <br />三、所有元素可以继承的属性
+              <br />1、元素可见性：visibility
+              <br />2、光标属性：cursor
+              <br />四、内联元素可以继承的属性
+              <br />1、字体系列属性
+              <br />2、除text-indent、text-align之外的文本系列属性
+              <br />五、块级元素可以继承的属性
+              <br />1、text-indent、text-align
+          `
         }],
         es6question: [{
           q: '箭头函数和普通函数的区别',
@@ -293,10 +367,10 @@
               <br />（或者说箭头函数中的this指向的是定义时的this，而不是执行时的this）
               <br />箭头函数中this对象，就是定义时所在的对象，而不是使用时所在的对象，箭头函数中没有自己的this的，而箭头函数会默认使用父级的this。
               <br />首先到它的父作用域找，如果父作用域还是箭头函数，那么接着向上找，直到找到我们要的this指向`
-        },{
+        }, {
           q: 'es6的新特性',
           a: ``
-        },{
+        }, {
           q: 'promise',
           a: ``
         }],
@@ -314,7 +388,7 @@
               <br />last-modified: Mon ,24 dec 2020 09:49:49 GMT  文件修改时间，精确到秒
               <br />协商过程： 发请求-->看资源是否过期-->过期-->请求服务器-->服务器对比资源是否真的过期-->没过期-->返回304状态码-->客户端用缓存的老资源`
 
-        },{
+        }, {
           q: 'cookie、session和token',
           a: `Cookie是客户端保存用户信息的一种机制，用来记录用户的一些信息，也是实现Session的一种方式。
               <br />session是在服务端保存的一个数据结构，用来跟踪用户的状态，这个数据可以保存在集群、数据库、文件中。
@@ -328,13 +402,13 @@
               <br />session与token的区别:
               <br />1.session: 我发给你一张身份证，但只是一张写着身份证号码的纸片。你每次来办事，我去后台查一下你的 id 是不是有效。
               <br />2.token: 我发给你一张加密的身份证，以后你只要出示这张卡片，我就知道你一定是自己人。`
-        },{
+        }, {
           q: 'sessionstorage和localstorage',
           a: `<div><img src="./cookie.jpg"></div>
               可通过window.sessionstorage和window.localstorage在js中操作这两个对象
               <br />sessionstorage.setitem/getitem/removeitem
               <br />localstorage.setitem/getitem/removeitem`
-        },{
+        }, {
           q: 'http 三次握手 四次挥手',
           a: `三次握手
               <br />1.客户端向服务端发送一个数据包，告诉服务器需要建立连接
@@ -350,10 +424,10 @@
               <br />为什么关闭连接需要四次挥手？
               <br />这是因为当收到对方的FIN报文时，仅仅表示对方不再发送数据了，但是还能接收数据。己方也未必全部将数据都发送给对方了，所以己方可以立即CLOSE，也可以发送一个数据给对方后，再发送FIN报文给对方表示同意现在关闭连接，因此，己方ACK和FIN一般都会分开发送
               <div><a href="https://zhuanlan.zhihu.com/p/143064192?from_voters_page=true" style="font-size:12px">参考连接</div>`
-        },{
+        }, {
           q: 'BOM对象模型',
           a: `screen、window、navigator、location、document、history`
-        },{
+        }, {
           q: 'Location对象属性',
           a: `1.hash 设置或返回从#开始的URL
               <br />2.host 设置或返回主机名和当前URL的端口号
@@ -362,7 +436,7 @@
               <br />5.pathname 设置或返回当前URL的路径部分
               <br />6.port 设置或返回当前URL的端口号
               <br />7.search 设置或返回从？开始的URL(查询部分)`
-        },{
+        }, {
           q: '前端性能优化',
           a: `1.减少http请求
               <br />&nbsp&nbsp(1)合并图片(精灵图)。
@@ -383,10 +457,10 @@
         vue: [{
           q: 'v-if和v-show',
           a: 'v-if是决定该节点是否渲染，v-show是用样式决定显隐'
-        },{
+        }, {
           q: 'vue常用指令',
           a: `v-for、v-on、v-bind、v-if、v-show、v-model`
-        },{
+        }, {
           q: '生命周期',
           a: `beforeCreate;
               <br />created;
@@ -396,7 +470,7 @@
               <br />updated;
               <br />beforeDestroy;
               <br />destroyed;`
-        },{
+        }, {
           q: '双向绑定原理',
           a: `1.vue 双向数据绑定是通过 数据劫持 结合 发布订阅模式的方式来实现的， 也就是说数据和视图同步，数据发生变化，视图跟着变化，视图变化，数据也随之发生改变；
               <br />2.核心：关于VUE双向数据绑定，其核心是 Object.defineProperty()方法；
@@ -404,7 +478,7 @@
               <br />&nbsp&nbsp（1）Object.defineProperty(obj, prop, descriptor) ，这个语法内有三个参数，分别为 obj （要定义其上属性的对象） prop （要定义或修改的属性） descriptor （具体的改变方法）
               <br />&nbsp&nbsp（2）简单地说，就是用这个方法来定义一个值。当调用时我们使用了它里面的get方法，当我们给这个属性赋值时，又用到了它里面的set方法;
               <div><a href='https://www.jianshu.com/p/e7ebb1500613' style='font-size:12px'>参考连接1</a> <a href="https://www.jianshu.com/p/1b75a3623d0d" style='font-size:12xp;'>参考连接2</a></div>`
-        },{
+        }, {
           q: '组件传值',
           a: `1.父子组件,子组件靠props接收父组件的传值，用$emit出发事件来传值给父组件
               <br />2.兄弟组件传值，通过bus，new一个vue实例(bus)做连接两个组件的中央事件总线，在都通过bus.$emit(fuc,msg)来传递,通过bus.$on(fuc,fuc(msg))监听事件来处理传递值
@@ -413,7 +487,7 @@
               <br />export default new Vue()
               <br />3.$refs 的使用方法就是在元素或组件标签上添加ref属性指定一个引用信息，引用信息将会注册在父组件的$refs对象上，在js中使用$refs来指向DOM元素或组件实例
               <br />4.通过vuex`
-        },{
+        }, {
           q: 'nextTick()',
           a: `1.异步说明
               <br />&nbsp&nbsp&nbsp&nbsp Vue 实现响应式并不是数据发生变化之后 DOM 立即变化，而是按一定的策略进行 DOM 的更新。
@@ -426,7 +500,7 @@
       },
       methods: {
         showans(e) {
-          console.log(e.target)
+          console.log($(e.target))
           $(e.target).parents(".box").find('.answers').slideToggle()
         }
       }
