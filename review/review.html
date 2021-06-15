@@ -18,12 +18,14 @@
 
     a {
       font-size: 12px;
+      cursor: pointer;
     }
   </style>
 </head>
 
 <body>
   <div id="app">
+    <div @click='showall' class="a">toggle</div>
     <div>
       <h5>js</h5>
       <div v-for='(item,index) in jsquestion' class="box">
@@ -226,17 +228,18 @@
           a: `容器属性： 
               <br />flex-direction： row | row-reverse | colomn | colomn-reverse 决定主轴方向
               <br />flex-wrap: nowrap | wrap | wrap-reverse 是否换行
-              <br />flex-flow: <flex-direction> || <flex-wrap>
+              <br />flex-flow: flex-direction || flex-wrap
               <br />justify-content: flex-start | flex-end | center | space-between | space-around 定义了项目在主轴上的对齐方式
-              <br />align-items: flex-start | flex-end | center | baseline | stretch 定义了项目在交叉轴上如何对其
+              <br />align-items: flex-start | flex-end | center | baseline | stretch 定义了项目在交叉轴上如何对齐
               <br />align-content: flex-start | flex-end | center | space-between | space-around | stretch 定义了多根轴线的对其方式,若只有一根轴线则该属性无效
               <br />项目属性：
-              <br />order: <integer> 定义项目的排列顺序，数值越小，排列越前
-              <br />flex-grow: <number> 定义项目的放大比例,默认为0，即如果存在剩余空间，也不放大
-              <br />flex-shrink: <number> 定义项目的缩小比例，默认为1,即如果空间不足，该项目将缩小
-              <br />flex-basis: <length> 定义了在分配多余空间之前，项目占据的主轴空间。默认值为auto，即项目本来大小
-              <br />flex: [<flex-grow> <flex-shrink> <flex-basis>] flex为三个属性的简写，默认为 0 1 auto
-              <br />align-self: auto | flex-start | flex-end | center | baseline | stretch 属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性`
+              <br />order: 'integer' 定义项目的排列顺序，数值越小，排列越前
+              <br />flex-grow: 'number' 定义项目的放大比例,默认为0，即如果存在剩余空间，也不放大
+              <br />flex-shrink: 'number' 定义项目的缩小比例，默认为1,即如果空间不足，该项目将缩小
+              <br />flex-basis: 'length' 定义了在分配多余空间之前，项目占据的主轴空间。默认值为auto，即项目本来大小
+              <br />flex: ['flex-grow' 'flex-shrink' 'flex-basis'] flex为三个属性的简写，默认为 0 1 auto
+              <br />align-self: auto | flex-start | flex-end | center | baseline | stretch 属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性
+              <div><a href="https://www.cnblogs.com/hellocd/p/10443237.html" style="font-size:12px">参考连接</div>`
         }, {
           q: 'grid(栅格布局)',
           a: `<div><a href='http://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html' style='font-size:12px;'>参考链接</div>`
@@ -279,7 +282,7 @@
               <br />overflow: hidden;
               <br />text-overflow: ellipsis;
               <br />white-space: nowrap;
-              多行：(因使用了WebKit的CSS扩展属性，该方法适用于WebKit浏览器及移动端)
+              <br />多行：(因使用了WebKit的CSS扩展属性，该方法适用于WebKit浏览器及移动端)
               <br />display: -webkit-box;
               <br />-webkit-box-orient: vertical;
               <br />-webkit-line-clamb: 3;
@@ -496,12 +499,18 @@
               <br />由于Vue DOM更新是异步执行的，即修改数据时，视图不会立即更新，而是会监听数据变化，并缓存在同一事件循环中，等同一数据循环中的所有数据变化完成之后，再统一进行视图更新。
               <br />&nbsp&nbsp&nbsp&nbsp为了确保得到更新后的DOM，所以设置了 Vue.nextTick()方法。
               <div><a href="https://zhuanlan.zhihu.com/p/174396758" style='font-size:12px;'>参考连接</a></div>`
+        },{
+          q: 'vue面试题',
+          a: '<div><a href="https://zhuanlan.zhihu.com/p/92407628" style="font-size:12px">参考连接</div>`'
         }]
       },
       methods: {
         showans(e) {
           console.log($(e.target))
           $(e.target).parents(".box").find('.answers').slideToggle()
+        },
+        showall() {
+          $('.box .answers').slideToggle()
         }
       }
     })
