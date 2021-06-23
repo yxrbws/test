@@ -113,14 +113,14 @@
               <br />apply:是改变函数执行的作用域的，说的通俗点就是改变函数体内this的指向，apply第二个参数可以是Array实例，也可以是argument对象
               <br />call:也是改变函数执行的作用域的，和apply一样，不同的是call的接受参数必须逐个列出来
               <br />bind:这个方法会创建一个函数的实例，其this值会被绑定到传给bind()函数的值
-              <div><a href='https://blog.csdn.net/yc123h/article/details/52729484'>参考连接dds</a></div>`
+              <div><a href='https://blog.csdn.net/yc123h/article/details/52729484'>参考连接</a></div>`
         },{
           q: 'new操作符原理',
           a: `1.创建一个空对象
               <br />2.将空对象的原型指向构造函数的原型
               <br />3.将空对象作为构造函数的上下文(改变this指向)
               <br />4.对构造函数有返回值的判断
-              <div><a href='https://zhuanlan.zhihu.com/p/158640941'>参考连接dds</a></div>`
+              <div><a href='https://zhuanlan.zhihu.com/p/158640941'>参考连接</a></div>`
         }, {
           q: 'js继承方式',
           a: `1.构造函数继承
@@ -204,6 +204,10 @@
               <div><a href="https://www.cnblogs.com/ly1368489670/p/13924122.html" style="font-size:12px">跨域方式参考连接</a>  
                 <a href='http://www.ruanyifeng.com/blog/2016/04/cors.html' style="font-size:12px">跨域资源共享 CORS 详解</a></div>`
         }, {
+          q: 'require和import的区别',
+          a: `1.加载方式不同、规范不同。require是在运行是加载，是CommentJS/AMD规范；import是编译时加载，是ESMScript6+规范。
+              <br />2.require输出是值的拷贝，import输出是值的引用。`
+        },{
           q: 'EventLoop',
           a: `JavaScript语言的一大特点就是单线程，也就是说，同一个时间只能做一件事。单线程就意味着，所有任务需要排队，前一个任务结束，才会执行后一个任务。
               <br />如果前一个任务耗时很长，后一个任务就不得不一直等着。
@@ -376,6 +380,51 @@
         }, {
           q: 'promise',
           a: ``
+        },{
+          q: 'map,weakmap和set,weakset',
+          a: `set: 类似于数组，但它的成员的值都是唯一的，没有重复的值。它可以用于数组去重。
+          <br />&bnsp&nbsp向Set加入值的时候，不会发生类型转换，所以 5 和 '5' 是两个不同的值。Set内部判断两个值是否不同，使用的算法叫做'Same-value-zero equality'，类似于精确相等运算符'==='，
+          <br />主要区别是向Set加入值时认为NaN等于自身，而精确相等运算符认为NaN不等于自身。
+          <br />&bnsp&nbspSet结构的实例有以下属性：
+          <br />&bnsp&nbsp操作方法：
+          <br />&bnsp&nbsp&bnsp&nbsp -Set.prototype.contructor:构造函数，默认就是Set函数
+          <br />&bnsp&nbsp&bnsp&nbsp -Set.prototype.size: 返回Set实例的成员数量
+          <br />&bnsp&nbsp&bnsp&nbsp -Set.prototype.add(value): 添加某个值，返回Set本身
+          <br />&bnsp&nbsp&bnsp&nbsp -Set.prototype.delete(value): 删除某个值，返回一个布尔值，表示删除是否
+          <br />&bnsp&nbsp&bnsp&nbsp -Set.prototype.has(value): 返回一个布尔值，表示该值是否为Set的成员
+          <br />&bnsp&nbsp&bnsp&nbsp -Set.prototype.clear(): 清除所有成员，没有返回值。
+          <br />&bnsp&nbsp遍历属性：
+          <br />&bnsp&nbsp&bnsp&nbsp -Set.prototype.keys(): 返回键名的遍历器
+          <br />&bnsp&nbsp&bnsp&nbsp -Set.prototype.values(): 返回键值的遍历器
+          <br />&bnsp&nbsp&bnsp&nbsp -Set.prototype.entries(): 返回键值对的遍历器
+          <br />&bnsp&nbsp&bnsp&nbsp -Set.prototype.forEach(): 使用回调函数遍历每个成员
+          <br />&bnsp&nbsp需要特别指出的是，Set的遍历顺序就是插入顺序
+          <br />WeakSet：结构与Set类似，也是不重复的值的集合。但是，它与Set有两个区别。
+          <br />&bnsp&nbsp首先，WeakSet的成员只能是对象，而不能是其他类型的值。
+          <br />&bnsp&nbsp其次，WeakSet中的对象都是弱引用，即垃圾回收机制不考虑WeakSet对该对象的引用。因此WeakSet适合临时存放一组对象，以及存放跟对象绑定的信息。
+          <br />&bnsp&nbsp另外因为垃圾回收机制何时运行是不可预测的，因此ES6规定WeakSet不可遍历。
+          <br />&bnsp&nbspWeakSet结构有以下三个方法
+          <br />&bnsp&nbsp&bnsp&nbsp -WeakSet.prototype.add(value)
+          <br />&bnsp&nbsp&bnsp&nbsp -WeakSet.prototype.delete(value)
+          <br />&bnsp&nbsp&bnsp&nbsp -WeakSet.prototype.has(value)
+          <br />Map: 他类似于对象，也是键值对的集合，但是'键'的范围不限于字符串，各种类型的值(包括对象)都可以当做键。
+          <br />&bnsp&nbspMap结构的实例有以下属性和操作方法
+          <br />&bnsp&nbsp&bnsp&nbsp size属性： 返回Map结构成员的总数
+          <br />&bnsp&nbsp&bnsp&nbsp -Map.prototype.set(key,value)
+          <br />&bnsp&nbsp&bnsp&nbsp -Map.prototype.get(key)
+          <br />&bnsp&nbsp&bnsp&nbsp -Map.prototype.has(key)
+          <br />&bnsp&nbsp&bnsp&nbsp -Map.prototype.delete(key)
+          <br />&bnsp&nbsp&bnsp&nbsp -Map.prototype.clear()
+          <br />&bnsp&nbspMap结构原生提供三个遍历器生成函数和一个遍历方法
+          <br />&bnsp&nbsp&bnsp&nbsp -Map.prototype.keys(): 返回键名的遍历器
+          <br />&bnsp&nbsp&bnsp&nbsp -Map.prototype.values(): 返回键值的遍历器
+          <br />&bnsp&nbsp&bnsp&nbsp -Map.prototype.entries(): 返回所有成员的遍历器
+          <br />&bnsp&nbsp&bnsp&nbsp -Map.prototype.forEach(): 遍历Map的所有成员
+          <br />&bnsp&nbsp需要特别注意的是，Map的遍历顺序就是插入顺序。
+          <br />WeakMap： 结构与Map类似，也是用于生成键值对的集合。与Map有两点区别
+          <br />&bnsp&nbsp首先，WeakMap只接受对象作为键名(null除外)，不接受其他类型的值做为键名。
+          <br />&bnsp&nbsp其次，WeakMap的键名所指向的对象，不计入垃圾回收机制,因此 WeakMap没有遍历操作。
+          <br />&bnsp&nbspWeakMap只有四个方法可用： get()、set()、has()、delete()`
         }],
         browser: [{
           q: '强缓存和协商缓存',
@@ -389,8 +438,13 @@
               <br />设置线上缓存，response header里设置
               <br />etag: '5c20abbd-e2e8'  每个文件有一个，即文件hash
               <br />last-modified: Mon ,24 dec 2020 09:49:49 GMT  文件修改时间，精确到秒
-              <br />协商过程： 发请求-->看资源是否过期-->过期-->请求服务器-->服务器对比资源是否真的过期-->没过期-->返回304状态码-->客户端用缓存的老资源`
+              <br />协商过程： 发请求-->看资源是否过期-->过期-->请求服务器-->服务器对比资源是否真的过期-->没过期-->返回304状态码-->客户端用缓存的老资源
+              <br /><div style='text-indent:150px'>-->过期-->服务器返回新的资源，并更新last-modified</div>`
 
+        },{
+          q: '浏览器的事件传播机制',
+          a: `事件传播分为三个阶段：捕获，目标对象，冒泡。其中捕获是事件对象从window派发到目标对象父级的过程；目标阶段是事件对象派发到目标元素时的阶段，如果事件类型
+              <br />指示不冒泡，那事件传播在此阶段终止；冒泡和捕获相反是以目标对象父级到window的过程。`
         }, {
           q: 'cookie、session和token',
           a: `Cookie是客户端保存用户信息的一种机制，用来记录用户的一些信息，也是实现Session的一种方式。
