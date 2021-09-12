@@ -48,7 +48,7 @@ const router = createRouter({
     {
       path: '/product/:id',
       name: 'product',
-      component: () => import( /*webpackChunkName: 'production' */ '@/view/ProductDetail.vue'),
+      component: () => import( /*webpackChunkName: 'product' */ '@/view/ProductDetail.vue'),
       meta: {
         index: 3
       }

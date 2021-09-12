@@ -12,9 +12,9 @@
   <div class="product-list-wrap">
     <div class="product-list-content">
       <header class="category-header wrap">
-        <i class="nbicon nbfanhui" @click="goBack"></i>
+        <van-icon name="arrow-left" @click="goBack" />
         <div class="header-search">
-          <i class="nbicon nbSearch"></i>
+          <van-icon name="search" />
           <input
             type="text"
             class="search-title"
@@ -173,6 +173,9 @@ export default {
         font-size: 25px;
         font-weight: bold;
       }
+      .van-icon-arrow-left{
+        line-height: 50px;
+      }
       .header-search {
         display: flex;
         width: 76%;
@@ -191,6 +194,10 @@ export default {
           font-size: 12px;
           color: #666;
           background: #F7F7F7;
+        }
+        .van-icon-search{
+          line-height: 20px;
+          margin-left: 10px;
         }
     }
     .icon-More {

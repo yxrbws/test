@@ -29,7 +29,8 @@ import {
   Tabs,
   ActionBarButton,
   ActionBarIcon,
-  ActionBar
+  ActionBar,
+  PullRefresh
 } from 'vant'
 import 'lib-flexible/flexible.js'
 import 'vant/lib/index.css';
@@ -69,6 +70,7 @@ app.use(Icon)
   .use(ActionBarButton)
   .use(ActionBarIcon)
   .use(ActionBar)
+  .use(PullRefresh)
 
 
 app.mount('#app')
