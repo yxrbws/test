@@ -10,7 +10,7 @@ import axios from 'axios'
 import { Toast } from 'vant'
 import router from '../router'
 
-axios.defaults.baseURL = '//backend-api-01.newbee.ltd/api/v1'
+axios.defaults.baseURL = 'http://backend-api-01.newbee.ltd/api/v1'
 axios.defaults.withCredentials = true
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.headers['token'] = localStorage.getItem('token') || ''
