@@ -73,7 +73,7 @@ import { useStore } from 'vuex'
 import { Toast } from 'vant'
 import navBar from '@/components/NavBar'
 import sHeader from '@/components/SimpleHeader'
-import { getCart, deleteCartItem, modifyCart } from '@/util/server'
+import { getCart, deleteCartItem, modifyCart } from '@/service/cart'
 
 export default {
   components: {

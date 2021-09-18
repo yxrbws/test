@@ -58,7 +58,7 @@
 <script>
 import { reactive, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { search } from '@/util/server'
+import { search } from '@/service/good'
 export default {
   setup() {
     const route = useRoute()

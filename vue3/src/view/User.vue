@@ -49,7 +49,7 @@
 import { reactive, onMounted, toRefs } from 'vue'
 import navBar from '@/components/NavBar'
 import sHeader from '@/components/SimpleHeader'
-import { getUserInfo } from '@/util/server'
+import { getUserInfo } from '@/service/user'
 import { useRouter } from 'vue-router'
 export default {
   components: {

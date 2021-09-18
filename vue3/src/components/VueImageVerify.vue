@@ -1,6 +1,7 @@
 <template>
   <div class="img-verify">
     <canvas ref="verify" :width="width" :height="height" @click="handleDraw"></canvas>
+    <div ref="test">测试</div>
   </div>
 </template>
 n 
@@ -9,6 +10,8 @@ import { reactive, onMounted, ref, toRefs } from 'vue'
 export default {
   setup() {
     const verify = ref(null)
+    const test = ref(null)
+    
     const state = reactive({
       pool: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', // 字符串
       width: 120,
@@ -18,6 +21,8 @@ export default {
     onMounted(() => {
       // 初始化绘制图片验证码
       state.imgCode = draw()
+      console.log('verify',verify)
+      console.log('test',test.value.innerHTML)
     })
     
     // 点击图片重新绘制
@@ -110,7 +115,8 @@ export default {
     return {
       ...toRefs(state),
       verify,
-      handleDraw
+      handleDraw,
+      test
     }
   }
 }

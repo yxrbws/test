@@ -87,7 +87,7 @@
 import { reactive, ref, toRefs } from 'vue'
 import sHeader from '@/components/SimpleHeader'
 import vueImgVerify from '@/components/VueImageVerify'
-import { login, register } from '@/util/server'
+import { login, register } from '@/service/user'
 import { setLocal } from '@/common/js/utils'
 import md5 from 'js-md5'
 import { Toast } from 'vant'

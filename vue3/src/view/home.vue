@@ -84,8 +84,8 @@ import { reactive, onMounted, toRefs, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import swiper from '@/components/Swiper'
 import navBar from '@/components/NavBar'
-import { getHome } from '@/util/server.js'
-// import { getLocal } from '@/common/js/utils'
+import { getHome } from '@/service/home'
+import { getLocal } from '@/common/js/utils'
 import { Toast } from 'vant'
 
 export default {
@@ -149,10 +149,10 @@ export default {
    })
   
   onMounted(async () => {
-    // const token = getLocal('token')
-    // if(token){
-    //   state.isLogin = true
-    // }
+    const token = getLocal('token')
+    if(token){
+      state.isLogin = true
+    }
     Toast.loading({
       message: '加载中...',
       forbidClick: true

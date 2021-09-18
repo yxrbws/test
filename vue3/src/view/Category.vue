@@ -62,7 +62,7 @@ import { reactive, onMounted, ref, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import navBar from '@/components/NavBar'
 import listScroll from '@/components/ListScroll'
-import { getCategory } from "@/util/server";
+import { getCategory } from "@/service/good";
 import { Toast } from 'vant'
 export default {
   components: {

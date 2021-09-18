@@ -43,7 +43,7 @@ export default {
     onMounted(() => {
       const token = getLocal('token')
       const path = route.path
-      if (token && ['/home', '/category'].includes(path)) {
+      if (token && !['/home', '/category'].includes(path)) {
         store.dispatch('updateCart')
       }
     })

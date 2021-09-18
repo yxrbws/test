@@ -43,7 +43,7 @@ const router = createRouter({
     {
       path: '/user',
       name: 'user',
-      component: import( /* webpackChunkName: 'user' */ '@/view/User.vue')
+      component: () => import( /* webpackChunkName: 'user' */ '@/view/User.vue')
     },
     {
       path: '/product/:id',
